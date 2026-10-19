@@ -1,0 +1,1062 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#1c2b4a">
+<meta name="robots" content="noindex,nofollow">
+<meta name="referrer" content="no-referrer">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<title>SP Observe</title>
+<style>
+:root{--navy:#1c2b4a;--navy2:#2c4170;--paper:#f7f1e3;--card:#fffdf7;--line:#d9cfb6;--ink:#1d2433;--mute:#6b6a63;--gold:#b8891a;--ok:#2f7d4f;--warn:#b8650a;--bad:#a8322d;--chip:#e7edf8}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--paper);color:var(--ink);font:16px/1.4 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;padding-bottom:84px}
+h1,h2,h3{margin:0;font-family:Georgia,"Times New Roman",serif;color:var(--navy)}
+h2{font-size:1.25rem;margin:18px 0 8px}h3{font-size:1.05rem}
+a{color:var(--navy2)}
+button,input,select,textarea{font:inherit;color:inherit}
+.top{background:var(--navy);color:#fff;display:flex;align-items:center;gap:12px;padding:8px 14px;position:sticky;top:0;z-index:20}
+.brand{display:flex;flex-direction:column;align-items:center;min-width:64px}
+.brand img{height:38px;width:auto;display:block}
+.brand .mark{height:38px;width:38px;border-radius:50%;background:#fff;color:var(--navy);display:flex;align-items:center;justify-content:center;font:700 15px Georgia,serif}
+.brand small{font-size:9.5px;opacity:.75;margin-top:2px;letter-spacing:.2px;white-space:nowrap}
+.top .title{flex:1;min-width:0}
+.top .title b{display:block;font:700 1.05rem Georgia,serif}
+.top .title span{font-size:.78rem;opacity:.8}
+.top .who{font-size:.78rem;opacity:.85;text-align:right}
+nav.tabs{background:#fff;border-bottom:1px solid var(--line);display:flex;overflow-x:auto;position:sticky;top:55px;z-index:19}
+nav.tabs a{flex:1 0 auto;padding:12px 14px;text-align:center;text-decoration:none;color:var(--navy);font-weight:600;border-bottom:3px solid transparent;white-space:nowrap;min-height:48px}
+nav.tabs a.on{border-bottom-color:var(--gold);background:#faf5e6}
+main{max-width:980px;margin:0 auto;padding:10px 14px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px 14px;margin:10px 0;box-shadow:0 1px 0 rgba(0,0,0,.03)}
+.card.warn{border-left:5px solid var(--warn)}.card.bad{border-left:5px solid var(--bad)}.card.good{border-left:5px solid var(--ok)}
+.row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px}
+.grid3{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:10px}
+label.f{display:block;font-size:.8rem;font-weight:600;color:var(--mute);margin:0 0 3px}
+input[type=text],input[type=date],input[type=time],input[type=email],input[type=password],input[type=search],select,textarea{width:100%;min-height:46px;padding:9px 11px;border:1px solid #bdb394;border-radius:9px;background:#fff}
+textarea{min-height:92px;resize:vertical}
+input:focus,select:focus,textarea:focus,button:focus-visible{outline:3px solid #8fb0ee;outline-offset:1px}
+.btn{min-height:48px;padding:10px 16px;border-radius:10px;border:1px solid var(--navy);background:var(--navy);color:#fff;font-weight:700;cursor:pointer}
+.btn.alt{background:#fff;color:var(--navy)}.btn.gold{background:var(--gold);border-color:var(--gold);color:#fff}.btn.bad{background:var(--bad);border-color:var(--bad)}.btn.small{min-height:38px;padding:6px 12px;font-size:.9rem}
+.btn:disabled{opacity:.5}
+a.btn{text-decoration:none}
+@media screen{.sheet{zoom:var(--pz,1)}}
+.big{width:100%;min-height:62px;font-size:1.1rem}
+.muted{color:var(--mute)}.small{font-size:.85rem}
+.pill{display:inline-block;padding:2px 9px;border-radius:99px;font-size:.78rem;font-weight:700;background:#e9e4d3;color:#444}
+.pill.ok{background:#d9efe1;color:#1d5a37}.pill.warn{background:#fbe6c6;color:#7a4204}.pill.bad{background:#f6d4d1;color:#7d1f1b}.pill.info{background:var(--chip);color:#233b6e}
+.stat{text-align:center}.stat b{font:700 2rem Georgia,serif;color:var(--navy);display:block}
+.list>.item{display:flex;gap:10px;align-items:center;padding:10px 4px;border-bottom:1px solid #eadfc3;min-height:52px}
+.list>.item:last-child{border-bottom:0}.item .grow{flex:1;min-width:0}.item .t{font-weight:600}
+.item.click{cursor:pointer}
+.seg{display:flex;gap:0;border:1px solid var(--navy);border-radius:10px;overflow:hidden}
+.seg button{flex:1;min-height:48px;border:0;background:#fff;color:var(--navy);font-weight:700;border-right:1px solid var(--navy);cursor:pointer;padding:6px}
+.seg button:last-child{border-right:0}.seg button.on{background:var(--navy);color:#fff}
+.opts{display:flex;gap:8px;flex-wrap:wrap}.opts button{min-height:48px;min-width:72px;border-radius:10px;border:2px solid var(--navy);background:#fff;color:var(--navy);font-weight:700;cursor:pointer;padding:6px 14px}
+.opts button.on{background:var(--navy);color:#fff}
+details.sec{background:var(--card);border:1px solid var(--line);border-radius:12px;margin:10px 0;overflow:hidden}
+details.sec>summary{list-style:none;cursor:pointer;padding:14px;min-height:56px;display:flex;align-items:center;gap:10px;font:700 1.05rem Georgia,serif;color:var(--navy);background:#f4ecd5}
+details.sec>summary::-webkit-details-marker{display:none}
+details.sec>summary:after{content:"▾";margin-left:auto;font-size:1.1rem}
+details.sec[open]>summary:after{content:"▴"}
+details.sec .body{padding:6px 12px 14px}
+.sec .num{display:inline-flex;width:28px;height:28px;border-radius:50%;background:var(--navy);color:#fff;align-items:center;justify-content:center;font:700 .9rem sans-serif}
+.sub{font-weight:700;color:var(--navy2);margin:12px 0 4px;font-size:.92rem;text-transform:none}
+.chk{display:flex;gap:12px;align-items:flex-start;padding:11px 8px;border-radius:10px;border:1px solid #e6dcc0;margin:6px 0;background:#fff;cursor:pointer;min-height:54px;user-select:none}
+.chk .box{flex:0 0 28px;height:28px;border:2px solid var(--navy);border-radius:7px;display:flex;align-items:center;justify-content:center;font-weight:900;color:#fff;margin-top:1px}
+.chk.on{background:#e8f1e6;border-color:#8fbf9d}.chk.on .box{background:var(--ok);border-color:var(--ok)}
+.chk .tx{flex:1}.chk .when{font-size:.75rem;color:var(--ok);font-weight:700;margin-left:6px}
+.code{display:inline-block;font:700 .75rem ui-monospace,Menlo,monospace;background:var(--chip);color:#233b6e;border-radius:6px;padding:1px 6px;margin-left:4px;cursor:default}
+.tags{display:flex;gap:6px;flex-wrap:wrap;margin:6px 0}
+.tag{background:var(--chip);color:#233b6e;border-radius:99px;padding:5px 6px 5px 11px;font-weight:700;font-size:.82rem;display:inline-flex;gap:6px;align-items:center}
+.tag button{border:0;background:#c9d6ee;border-radius:50%;width:24px;height:24px;cursor:pointer;font-weight:900;color:#233b6e}
+.notelbl{font-size:.8rem;font-weight:700;color:var(--mute);margin-top:8px}
+.bar{position:fixed;left:0;right:0;bottom:0;background:#fff;border-top:2px solid var(--navy);padding:8px 12px;display:flex;gap:8px;align-items:center;z-index:30;box-shadow:0 -4px 12px rgba(0,0,0,.08)}
+.bar .st{flex:1;font-size:.82rem;min-width:0}.bar .st b{display:block;font-size:1rem;color:var(--navy);font-variant-numeric:tabular-nums}
+.bar .btn{flex:0 0 auto}
+.toast{position:fixed;left:50%;transform:translateX(-50%);bottom:96px;background:var(--navy);color:#fff;padding:11px 18px;border-radius:99px;z-index:60;max-width:92%;text-align:center;font-weight:600}
+.toast.bad{background:var(--bad)}
+.ovl{position:fixed;inset:0;background:rgba(15,20,35,.55);z-index:50;display:flex;align-items:flex-end;justify-content:center}
+.sheetm{background:var(--paper);border-radius:16px 16px 0 0;max-width:720px;width:100%;max-height:90vh;overflow:auto;padding:14px}
+@media(min-width:700px){.ovl{align-items:center}.sheetm{border-radius:16px}}
+.sheetm .hd{display:flex;align-items:center;gap:10px;margin-bottom:8px;position:sticky;top:-14px;background:var(--paper);padding:6px 0;z-index:2}
+.sheetm .hd h3{flex:1}
+.pick{display:flex;gap:10px;padding:10px 6px;border-bottom:1px solid #e5dabb;cursor:pointer;align-items:flex-start;min-height:48px}
+.pick.on{background:#e8f1e6}.pick .cd{flex:0 0 46px;font:700 .85rem ui-monospace,monospace;color:#233b6e}
+.pick .star{color:var(--gold)}
+.login{max-width:420px;margin:40px auto;padding:0 14px}
+.barc{height:12px;border-radius:6px;background:#e5dcc2;overflow:hidden;min-width:60px}.barc i{display:block;height:100%;background:var(--navy2)}
+table.rep{width:100%;border-collapse:collapse;font-size:.9rem}table.rep td,table.rep th{padding:7px 6px;border-bottom:1px solid #e9dfc3;text-align:left;vertical-align:middle}table.rep th{font-size:.75rem;color:var(--mute)}
+.tscript{font:14px/1.5 ui-monospace,Menlo,monospace;min-height:220px}
+.live{display:inline-block;width:10px;height:10px;border-radius:50%;background:var(--bad);margin-right:6px;animation:bl 1s infinite}
+@keyframes bl{50%{opacity:.25}}
+.hide{display:none!important}
+/* ---------- printable CDI form ---------- */
+.printwrap{background:#fff;border:1px solid var(--line);padding:0;margin:10px 0;overflow:auto}
+.sheet{width:7.7in;margin:0 auto;padding:.1in 0;background:#fff;color:#000;font:8.5pt/1.22 Arial,Helvetica,sans-serif;transform-origin:top left}
+.sheet h1{font:700 12pt Georgia,serif;margin:0 0 1px;color:#000}
+.sheet .sub2{font-size:8pt;margin-bottom:3px;color:#333}
+.sheet table{width:100%;border-collapse:collapse;margin:0 0 3px;table-layout:fixed}
+.sheet td,.sheet th{border:1px solid #000;padding:1.5px 4px;vertical-align:top;text-align:left;word-wrap:break-word;overflow-wrap:anywhere}
+.sheet th{background:#d9dfec;font-weight:700}
+.sheet .l{width:56%}.sheet .r{width:44%}
+.sheet .mv{font-weight:700;font-size:7.6pt;margin-top:1px}
+.sheet .it{display:flex;gap:3px}.sheet .it .cb{flex:0 0 9px}.sheet .it.on{font-weight:700}
+.sheet .cd{font-size:7pt;color:#333;white-space:nowrap}
+.sheet .nt{white-space:pre-wrap}
+.sheet .tg{font-size:7pt;color:#234}
+.sheet .foot{font-size:7pt;color:#444;margin-top:2px}
+@media print{
+ @page{size:letter;margin:.35in}
+ body{background:#fff;padding:0}
+ .top,nav.tabs,.bar,.noprint,.toast,.ovl{display:none!important}
+ main{max-width:none;padding:0}
+ .printwrap{border:0;margin:0;overflow:visible}
+ .sheet{margin:0}
+ .pb{page-break-after:always}
+}
+
+</style>
+</head>
+<body>
+<noscript>This page needs JavaScript.</noscript>
+<script>
+'use strict';
+/* SP Observe - page code. Contains NO teacher, student or login data: everything comes from your script after you sign in. */
+const BUILD = 'build-01-observe-initial';
+const API_URL = 'https://script.google.com/macros/s/AKfycbyGERxfSv0blFBxH1nL7Tj53a_ja1sdTfsULgwAt9R78bx5EmTavD6VFQueqB4PlrQ/exec';   // <- between the quotes, paste the Apps Script web app URL (ends in /exec)
+
+/* ---------- tiny helpers ---------- */
+const $ = (s, r = document) => r.querySelector(s);
+const $$ = (s, r = document) => Array.from(r.querySelectorAll(s));
+const esc = s => String(s == null ? '' : s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+function lsGet(k) { try { return localStorage.getItem(k); } catch (e) { return null; } }
+function lsSet(k, v) { try { localStorage.setItem(k, v); return true; } catch (e) { return false; } }
+function lsDel(k) { try { localStorage.removeItem(k); } catch (e) { } }
+function lsKeys(prefix) { try { return Object.keys(localStorage).filter(k => k.indexOf(prefix) === 0); } catch (e) { return []; } }
+const pad2 = n => String(n).padStart(2, '0');
+const ymd = d => d.getFullYear() + '-' + pad2(d.getMonth() + 1) + '-' + pad2(d.getDate());
+const hm = d => pad2(d.getHours()) + ':' + pad2(d.getMinutes());
+const hms = d => hm(d) + ':' + pad2(d.getSeconds());
+const isoLocal = d => ymd(d) + 'T' + hms(d);
+function fmtT(t) { const m = /^(\d{1,2}):(\d{2})/.exec(t || ''); if (!m) return t || ''; let h = +m[1]; const ap = h >= 12 ? 'PM' : 'AM'; h = h % 12 || 12; return h + ':' + m[2] + ' ' + ap; }
+function fmtD(s) { if (!/^\d{4}-\d{2}-\d{2}$/.test(s || '')) return s || ''; const d = new Date(s + 'T12:00:00'); return d.toLocaleDateString(undefined, { month: 'short', day: 'numeric', year: 'numeric' }); }
+function fmtDs(s) { if (!/^\d{4}-\d{2}-\d{2}$/.test(s || '')) return s || ''; const d = new Date(s + 'T12:00:00'); return d.toLocaleDateString(undefined, { weekday: 'short', month: 'short', day: 'numeric' }); }
+function rid(prefix) { const a = new Uint8Array(8); (self.crypto || window.crypto).getRandomValues(a); return prefix + Array.from(a, b => (b % 36).toString(36)).join(''); }
+const todayStr = () => ymd(new Date());
+function daysTxt(n) { return n === 0 ? 'today' : n === 1 ? '1 day' : n < 0 ? Math.abs(n) + ' days past' : n + ' days'; }
+function hhmmToMin(t) { const m = /^(\d{1,2}):(\d{2})/.exec(t || ''); return m ? +m[1] * 60 + +m[2] : null; }
+function minutesBetween(a, b) { const x = hhmmToMin(a), y = hhmmToMin(b); return x == null || y == null || y < x ? null : y - x; }
+
+/* ---------- state ---------- */
+const S = { token: null, who: '', init: null, tok_exp: 0, cur: null, dash_days: null };
+function saveSession() {
+  if (S.token) lsSet('spobs_sess', JSON.stringify({ token: S.token, who: S.who, exp: S.tok_exp }));
+  else lsDel('spobs_sess');
+}
+function loadSession() {
+  try { const o = JSON.parse(lsGet('spobs_sess') || 'null'); if (o && o.token && o.exp > Date.now()) { S.token = o.token; S.who = o.who; S.tok_exp = o.exp; } } catch (e) { }
+}
+function apiBase() { return (API_URL && !/PASTE/.test(API_URL)) ? API_URL : (lsGet('spobs_api') || ''); }
+
+/* ---------- talking to the Apps Script (GET + JSON, long data sent in pieces) ---------- */
+class AuthError extends Error { }
+async function rawGet(params) {
+  const base = apiBase();
+  if (!base) throw new Error('The web app address has not been set yet.');
+  const q = Object.keys(params).filter(k => params[k] !== undefined && params[k] !== null).map(k => encodeURIComponent(k) + '=' + encodeURIComponent(params[k])).join('&');
+  const ctl = new AbortController(); const to = setTimeout(() => ctl.abort(), 45000);
+  try {
+    const r = await fetch(base + (base.indexOf('?') >= 0 ? '&' : '?') + q, { method: 'GET', redirect: 'follow', signal: ctl.signal });
+    if (!r.ok) throw new Error('Server answered ' + r.status);
+    return await r.json();
+  } catch (e) {
+    if (e.name === 'AbortError') throw new Error('The server took too long. Check your connection and try again.');
+    if (e instanceof TypeError) throw new Error('Could not reach the server (offline?).');
+    throw e;
+  } finally { clearTimeout(to); }
+}
+function splitForUrl(json, maxEnc) {
+  const out = []; let i = 0;
+  while (i < json.length) {
+    let n = Math.min(1500, json.length - i);
+    for (; ;) {
+      let piece = json.substr(i, n);
+      if (n > 1 && /[\uD800-\uDBFF]/.test(piece.slice(-1))) { n--; continue; }
+      if (encodeURIComponent(piece).length <= maxEnc || n <= 20) { out.push(piece); i += n; break; }
+      n = Math.floor(n * 0.7);
+    }
+  }
+  return out;
+}
+async function api(action, payload, extra, soft) {
+  const params = Object.assign({ action, token: S.token || '' }, extra || {});
+  if (payload !== undefined) {
+    const json = JSON.stringify(payload);
+    if (encodeURIComponent(json).length < 1800) params.p = json;
+    else {
+      const parts = splitForUrl(json, 2400), k = rid('u');
+      const res = await Promise.all(parts.map((d, i) => rawGet({ action: 'put', token: S.token || '', k, i, n: parts.length, d })));
+      for (const r of res) { if (r.auth) { authLost(); throw new AuthError('Please sign in again.'); } if (!r.ok) throw new Error(r.error || 'Upload failed'); }
+      params.ref = k; params.n = parts.length;
+    }
+  }
+  const res = await rawGet(params);
+  if (res.auth) { authLost(); throw new AuthError(res.error); }
+  if (!res.ok && !soft) { const e = new Error(res.error || 'Something went wrong.'); e.res = res; throw e; }
+  return res;
+}
+function authLost() { S.token = null; saveSession(); showLogin('Your session ended. Please sign in again.'); }
+
+/* ---------- toast + modal ---------- */
+let toastT;
+function toast(msg, bad) {
+  $$('.toast').forEach(t => t.remove());
+  const d = document.createElement('div'); d.className = 'toast' + (bad ? ' bad' : ''); d.textContent = msg; d.setAttribute('role', 'status');
+  document.body.appendChild(d); clearTimeout(toastT); toastT = setTimeout(() => d.remove(), bad ? 6000 : 2600);
+}
+function modal(html, onClose) {
+  closeModal();
+  const o = document.createElement('div'); o.className = 'ovl'; o.id = 'modal';
+  o.innerHTML = '<div class="sheetm" role="dialog" aria-modal="true">' + html + '</div>';
+  o.addEventListener('click', e => { if (e.target === o) closeModal(); });
+  document.body.appendChild(o); o._onClose = onClose; return o;
+}
+function closeModal() { const o = $('#modal'); if (o) { const f = o._onClose; o.remove(); if (f) f(); } }
+function confirmBox(text, yes, danger) {      // its own layer, so it never closes the window underneath it
+  return new Promise(res => {
+    const o = document.createElement('div'); o.className = 'ovl'; o.id = 'cbox'; o.style.zIndex = 70;
+    o.innerHTML = '<div class="sheetm" role="alertdialog" aria-modal="true"><h3>' + esc(text) + '</h3><div class="row" style="margin-top:14px"><button class="btn ' + (danger ? 'bad' : '') + '" data-y>' + esc(yes || 'Yes') + '</button><button class="btn alt" data-n>Cancel</button></div></div>';
+    document.body.appendChild(o);
+    const done = v => { o.remove(); res(v); };
+    $('[data-y]', o).onclick = () => done(true); $('[data-n]', o).onclick = () => done(false);
+    o.addEventListener('click', e => { if (e.target === o) done(false); });
+  });
+}
+
+/* ---------- shell ---------- */
+function shell() {
+  document.body.innerHTML = `
+  <header class="top">
+    <div class="brand"><img src="logo.png" alt="" id="logoimg" onerror="this.replaceWith(Object.assign(document.createElement('div'),{className:'mark',textContent:'SP'}))"><small>${esc(BUILD)}</small></div>
+    <div class="title"><b>SP Observe</b><span id="sub">Private classroom observations</span></div>
+    <div class="who" id="who"></div>
+  </header>
+  <nav class="tabs" id="tabs">
+    <a href="#/" data-t="home">Home</a><a href="#/new" data-t="new">Observe</a><a href="#/visits" data-t="visits">Visits</a>
+    <a href="#/teachers" data-t="teachers">Teachers</a><a href="#/reports" data-t="reports">Reports</a><a href="#/settings" data-t="settings">Settings</a>
+  </nav>
+  <main id="view"></main>`;
+  $('#who').textContent = S.who;
+  $('#sub').textContent = (S.init && S.init.settings.school_name) || 'Private classroom observations';
+}
+function setTab(t) { $$('#tabs a').forEach(a => a.classList.toggle('on', a.dataset.t === t)); }
+function view(html) { $('#view').innerHTML = html; window.scrollTo(0, 0); }
+function bar(html) { let b = $('#actbar'); if (!b) { b = document.createElement('div'); b.id = 'actbar'; b.className = 'bar'; document.body.appendChild(b); } b.innerHTML = html; }
+function clearBar() { const b = $('#actbar'); if (b) b.remove(); }
+
+/* ---------- login ---------- */
+function showLogin(msg) {
+  clearBar(); stopClock(); stopAutosave();
+  const base = apiBase();
+  document.body.innerHTML = `
+  <div class="login">
+    <div style="text-align:center;margin-bottom:14px"><img src="logo.png" alt="" style="height:70px" onerror="this.style.display='none'"><h1 style="margin-top:8px">SP Observe</h1><div class="muted small">${esc(BUILD)}</div></div>
+    <div class="card">
+      <label class="f" for="code">Private code</label>
+      <input id="code" type="password" autocomplete="current-password" autocapitalize="off" autocorrect="off" spellcheck="false">
+      ${base ? '' : `<label class="f" for="api" style="margin-top:10px">Web app address (one time)</label><input id="api" type="text" placeholder="https://script.google.com/macros/s/.../exec" autocapitalize="off">`}
+      <div id="lmsg" class="small" style="color:var(--bad);min-height:20px;margin:8px 0">${esc(msg || '')}</div>
+      <button class="btn big" id="go">Sign in</button>
+    </div>
+    <p class="muted small" style="text-align:center">Personnel notes. Authorized administrators only.</p>
+  </div>`;
+  const go = async () => {
+    const a = $('#api'); if (a && a.value.trim()) lsSet('spobs_api', a.value.trim());
+    const btn = $('#go'); btn.disabled = true; $('#lmsg').textContent = 'Signing in...';
+    try {
+      const r = await rawGet({ action: 'login', code: $('#code').value });
+      if (!r.ok) { $('#lmsg').textContent = r.error || 'Sign in failed.'; btn.disabled = false; return; }
+      S.token = r.token; S.who = r.who; S.tok_exp = Date.now() + r.hours * 3600000; saveSession();
+      await boot();
+    } catch (e) { $('#lmsg').textContent = e.message; btn.disabled = false; }
+  };
+  $('#go').onclick = go; $('#code').addEventListener('keydown', e => { if (e.key === 'Enter') go(); }); $('#code').focus();
+}
+
+async function boot() {
+  try {
+    document.body.innerHTML = '<div class="login"><div class="card" style="text-align:center">Loading...</div></div>';
+    S.init = await api('init');
+    S.who = S.init.who; shell(); route();
+  } catch (e) { if (!(e instanceof AuthError)) showLogin(e.message); }
+}
+
+/* ---------- router ---------- */
+function go(path) { if (location.hash === '#' + path) route(); else location.hash = path; }
+window.addEventListener('hashchange', () => { if (S.init) route(); });
+async function route() {
+  if (!S.init) return;
+  const h = (location.hash || '#/').slice(1), parts = h.split('?')[0].split('/').filter(Boolean);
+  const q = new URLSearchParams(h.split('?')[1] || '');
+  if (!(parts[0] === 'obs')) { stopClock(); stopAutosave(); stopSTT(); }
+  if (parts[0] !== 'obs') clearBar();
+  try {
+    switch (parts[0] || 'home') {
+      case 'home': setTab('home'); return await viewHome();
+      case 'new': setTab('new'); return viewNew(q);
+      case 'obs': setTab('new'); return await viewObs(decodeURIComponent(parts[1] || ''));
+      case 'done': setTab('visits'); return viewDone(decodeURIComponent(parts[1] || ''));
+      case 'visits': setTab('visits'); return await viewVisits();
+      case 'teachers': setTab('teachers'); return viewTeachers();
+      case 'teacher': setTab('teachers'); return await viewTeacher(decodeURIComponent(parts[1] || ''));
+      case 'reports': setTab('reports'); return await viewReports(q);
+      case 'settings': setTab('settings'); return await viewSettings();
+      case 'print': setTab('visits'); return await viewPrint(decodeURIComponent(parts[1] || ''));
+      default: go('/');
+    }
+  } catch (e) { if (!(e instanceof AuthError)) { view('<div class="card bad"><b>Something went wrong.</b><br>' + esc(e.message) + '</div>'); } }
+}
+
+/* ---------- local drafts ---------- */
+function localDrafts() {
+  return lsKeys('spobs_draft_').map(k => { try { const o = JSON.parse(lsGet(k)); return o && o.O ? { key: k, O: o.O, saved: o.saved } : null; } catch (e) { return null; } }).filter(Boolean);
+}
+
+/* ---------- teachers helpers ---------- */
+function teachers(includeHidden) { return (S.init.teachers || []).filter(t => includeHidden || t.status !== 'hidden'); }
+function teacherOptions(sel) { return '<option value="">Choose a teacher...</option>' + teachers().map(t => `<option ${t.name === sel ? 'selected' : ''}>${esc(t.name)}</option>`).join(''); }
+function addTeacherModal(after) {
+  const m = modal(`<div class="hd"><h3>Add a teacher</h3><button class="btn small alt" data-x>Close</button></div>
+    <label class="f">Name</label><input id="tn" type="text" autocomplete="off">
+    <div class="grid2" style="margin-top:8px"><div><label class="f">Default room</label><input id="tr" type="text"></div><div><label class="f">Grades</label><input id="tg" type="text"></div></div>
+    <label class="f" style="margin-top:8px">Email (for sending feedback)</label><input id="te" type="email">
+    <button class="btn big" style="margin-top:12px" data-s>Add teacher</button>`);
+  $('[data-x]', m).onclick = closeModal;
+  $('[data-s]', m).onclick = async () => {
+    const name = $('#tn').value.trim(); if (!name) return toast('Type a name.', true);
+    try { const r = await api('teacher_save', { name, default_room: $('#tr').value, grades: $('#tg').value, email: $('#te').value }); S.init.teachers = r.teachers; closeModal(); toast('Added ' + name); if (after) after(name); }
+    catch (e) { toast(e.message, true); }
+  };
+  setTimeout(() => $('#tn') && $('#tn').focus(), 50);
+}
+
+/* ---------- HOME / dashboard ---------- */
+function statusPill(ed) {
+  const f = ed.formal, P = (c, t) => `<span class="pill ${c}">${esc(t)}</span>`;
+  if (f === 'not_started') return P('', 'Formal: not started');
+  if (f === 'in_progress') return P('info', 'Formal: in progress');
+  if (f === 'observed') return ed.post_overdue ? P('bad', 'Post-conference overdue (was due ' + fmtD(ed.post_due) + ')') : P('warn', 'Post-conference due ' + fmtD(ed.post_due));
+  if (f === 'post_done') return ed.ratings_overdue ? P('bad', 'Share ratings now (due ' + fmtD(ed.ratings_due) + ')') : P('warn', 'Share ratings by ' + fmtD(ed.ratings_due));
+  return P('ok', 'Formal complete');
+}
+async function viewHome() {
+  view('<div class="card muted">Loading...</div>');
+  const d = await api('dashboard', { today: todayStr(), days: S.dash_days || undefined });
+  S.dash_days = d.days;
+  const drafts = localDrafts();
+  const dl = d.deadlines;
+  const dlRow = (label, o, note) => `<div class="item"><div class="grow"><div class="t">${esc(label)}</div><div class="small muted">${esc(note)}</div></div><div style="text-align:right"><b>${fmtD(o.date)}</b><br><span class="pill ${o.days_left < 0 ? 'bad' : o.days_left <= 21 ? 'warn' : 'ok'}">${o.days_left < 0 ? Math.abs(o.days_left) + ' days ago' : o.days_left + ' days left'}</span></div></div>`;
+  let h = `
+  <div class="grid2" style="margin-top:6px">
+    <a class="btn big gold" style="text-decoration:none;display:flex;align-items:center;justify-content:center" href="#/new?type=informal">Start informal walkthrough</a>
+    <a class="btn big" style="text-decoration:none;display:flex;align-items:center;justify-content:center" href="#/new?type=formal">Start formal observation</a>
+  </div>`;
+  if (drafts.length) h += `<div class="card warn"><h3>Unfinished on this device</h3><div class="list">${drafts.map(x => `<div class="item"><div class="grow click"><div class="t">${esc(x.O.teacher || '(no teacher yet)')} <span class="pill info">${esc(x.O.type)}</span></div><div class="small muted">${esc(fmtD(x.O.date))} ${esc(fmtT(x.O.time_in))}</div></div><a class="btn small" href="#/obs/${encodeURIComponent(x.O.id)}">Resume</a><button class="btn small alt" data-discard="${esc(x.key)}">Discard</button></div>`).join('')}</div></div>`;
+  if (d.drafts.length) h += `<div class="card"><h3>Saved drafts on the server</h3><div class="list">${d.drafts.map(o => `<a class="item" style="text-decoration:none;color:inherit" href="#/obs/${encodeURIComponent(o.id)}"><div class="grow"><div class="t">${esc(o.teacher)} <span class="pill info">${esc(o.type)}</span></div><div class="small muted">${fmtD(o.date)} ${fmtT(o.time_in)} - ${o.n_checks} checks</div></div><span class="btn small alt">Open</span></a>`).join('')}</div></div>`;
+  h += `<div class="grid3">
+    <div class="card stat"><b>${d.week.total}</b>visits this week<div class="small muted">${d.week.informal} informal, ${d.week.formal} formal</div></div>
+    <div class="card stat"><b>${d.month.total}</b>visits this month<div class="small muted">${d.month.informal} informal, ${d.month.formal} formal</div></div>
+    <div class="card stat"><b>${d.open_followups.length}</b>open follow-ups<div class="small muted">${d.open_followups.filter(f => f.due && f.due < d.today).length} overdue</div></div></div>`;
+  h += `<div class="card"><h3>EDST ${esc(dl.eval_year)} deadlines</h3><div class="list">
+    ${dlRow('Formal observation', dl.formal, 'Contractual deadline; post-conference within 10 workdays after')}
+    ${dlRow('Share formal ratings', dl.ratings, 'Within 1-2 business days after the post-conference')}
+    ${dlRow('Growth Plan Visit', dl.gpv, 'Recommended due date (min. 10 minutes). Edit dates in Settings.')}
+  </div></div>`;
+  h += `<div class="card"><h3>EDST teachers</h3>`;
+  if (!d.edst.length) h += `<p class="muted">No one is marked EDST yet. Open a teacher and switch on "On EDST this year".</p>`;
+  else h += `<div class="list">${d.edst.map(e => `<div class="item click" data-go="/teacher/${encodeURIComponent(e.name)}"><div class="grow"><div class="t">${esc(e.name)}</div><div style="display:flex;gap:6px;flex-wrap:wrap;margin-top:4px">${statusPill(e)}
+      ${e.gpv_done ? `<span class="pill ${e.gpv_short ? 'warn' : 'ok'}">Growth Plan Visit ${fmtD(e.gpv_date)}${e.gpv_short ? ' (under 10 min)' : ''}</span>` : '<span class="pill">Growth Plan Visit: not yet</span>'}
+      <span class="pill info">${e.informal_count} informal</span></div></div></div>`).join('')}</div>`;
+  h += `</div>`;
+  h += `<div class="card"><div class="row"><h3 style="flex:1">Not visited in</h3><select id="days" style="width:auto">${[14, 21, 30, 45, 60, 90].map(n => `<option ${n === d.days ? 'selected' : ''} value="${n}">${n} days</option>`).join('')}</select></div>
+    ${d.unvisited.length ? `<div class="list">${d.unvisited.map(u => `<div class="item"><div class="grow click" data-go="/teacher/${encodeURIComponent(u.name)}"><div class="t">${esc(u.name)}</div><div class="small muted">${u.last ? 'Last visit ' + fmtD(u.last) + ' (' + u.days_ago + ' days ago)' : 'No visits yet'}</div></div><a class="btn small" href="#/new?type=informal&teacher=${encodeURIComponent(u.name)}">Visit</a></div>`).join('')}</div>` : '<p class="muted">Everyone has been visited recently.</p>'}</div>`;
+  if (d.open_followups.length) h += `<div class="card"><h3>Open follow-ups</h3><div class="list">${d.open_followups.slice(0, 12).map(f => followupRow(f, d.today)).join('')}</div></div>`;
+  view(h);
+  $('#days') && ($('#days').onchange = e => { S.dash_days = +e.target.value; viewHome(); });
+}
+function followupRow(f, today) {
+  const od = f.due && f.due < (today || todayStr());
+  return `<div class="item"><div class="chk-s"><input type="checkbox" style="width:26px;height:26px" data-fudone="${esc(f.id)}" ${f.status === 'done' ? 'checked' : ''} aria-label="Done"></div><div class="grow"><div class="t" ${f.status === 'done' ? 'style="text-decoration:line-through"' : ''}>${esc(f.text)}</div><div class="small muted">${esc(f.teacher)}${f.due ? ' - due ' + fmtD(f.due) : ''} ${od && f.status !== 'done' ? '<span class="pill bad">overdue</span>' : ''}</div></div></div>`;
+}
+
+/* global click delegation for simple navigation items */
+document.addEventListener('click', async e => {
+  const g = e.target.closest('[data-go]'); if (g && !e.target.closest('a,button,input')) { go(g.dataset.go); return; }
+  const dd = e.target.closest('[data-discard]');
+  if (dd) { if (await confirmBox('Discard this unfinished observation from this device?', 'Discard', true)) { lsDel(dd.dataset.discard); route(); } }
+});
+document.addEventListener('change', async e => {
+  const c = e.target.closest('[data-fudone]'); if (!c) return;
+  try { await api('fu_set', { id: c.dataset.fudone, status: c.checked ? 'done' : 'open' }); toast(c.checked ? 'Marked done' : 'Reopened'); } catch (er) { c.checked = !c.checked; toast(er.message, true); }
+});
+
+/* ---------- NEW observation start screen ---------- */
+function viewNew(q) {
+  clearBar();
+  const type = q.get('type') === 'formal' ? 'formal' : 'informal';
+  view(`<h2>Start an observation</h2>
+  <div class="card">
+    <label class="f">Type</label>
+    <div class="seg" id="typeSeg"><button data-v="informal" class="${type === 'informal' ? 'on' : ''}">Informal walkthrough</button><button data-v="formal" class="${type === 'formal' ? 'on' : ''}">Formal observation</button></div>
+    <p class="small muted" id="typeNote" style="margin:6px 0 10px"></p>
+    <label class="f">Teacher</label>
+    <div class="row" style="flex-wrap:nowrap"><select id="tsel" style="flex:1">${teacherOptions(q.get('teacher'))}</select><button class="btn alt" id="addT">+ Add</button></div>
+    <div id="gpvrow" style="margin-top:10px"><label class="chk" style="margin:0"><span class="box" id="gpvbox"></span><span class="tx"><b>This is a Growth Plan Visit</b><br><span class="small muted">EDST: at least 10 minutes, focused on the teacher's growth objective</span></span></label></div>
+    <button class="btn big gold" id="start" style="margin-top:14px">Start - record Time In now</button>
+    <p class="small muted">Time In starts the moment you tap. The period and room fill in on their own and you can edit anything.</p>
+  </div>`);
+  let cur = type, gpv = false;
+  const upd = () => {
+    $$('#typeSeg button').forEach(b => b.classList.toggle('on', b.dataset.v === cur));
+    $('#typeNote').textContent = cur === 'informal' ? 'Quick visit on the CDI Classroom Observation tool. Sections stay collapsed so you can open only what you see.' : 'All sections, plus pre-observation and post-observation conference notes and transcription options.';
+    $('#gpvrow').classList.toggle('hide', cur !== 'informal');
+    $('#gpvbox').textContent = gpv ? '✓' : ''; $('#gpvrow .chk').classList.toggle('on', gpv);
+  };
+  $$('#typeSeg button').forEach(b => b.onclick = () => { cur = b.dataset.v; upd(); });
+  $('#gpvrow .chk').onclick = () => { gpv = !gpv; upd(); };
+  $('#addT').onclick = () => addTeacherModal(n => { $('#tsel').innerHTML = teacherOptions(n); });
+  $('#start').onclick = async () => {
+    const t = $('#tsel').value; if (!t) return toast('Choose a teacher first.', true);
+    await newObs(cur, t, cur === 'informal' && gpv);
+  };
+  upd();
+}
+
+/* ---------- CSV ---------- */
+function csvCell(v) {
+  v = v == null ? '' : String(v);
+  if (/^[=+\-@\t\r]/.test(v)) v = "'" + v;           // keep spreadsheet programs from running text as formulas
+  return /[",\n\r]/.test(v) ? '"' + v.replace(/"/g, '""') + '"' : v;
+}
+function toCsv(rows, cols) { return [cols.join(',')].concat(rows.map(r => cols.map(c => csvCell(r[c])).join(','))).join('\r\n'); }
+function download(name, text, type) {
+  const b = new Blob([text], { type: type || 'text/csv;charset=utf-8' }), a = document.createElement('a');
+  a.href = URL.createObjectURL(b); a.download = name; document.body.appendChild(a); a.click();
+  setTimeout(() => { URL.revokeObjectURL(a.href); a.remove(); }, 500);
+}
+async function exportCsv(from, to) {
+  const r = await api('export', { from: from || undefined, to: to || undefined });
+  const stamp = todayStr();
+  download('observations-' + stamp + '.csv', toCsv(r.observations, ['id', 'type', 'teacher', 'date', 'time_in', 'time_out', 'minutes', 'period', 'room', 'grades', 'subject', 'is_gpv', 'status', 'pre_date', 'post_date', 'ratings_shared', 'n_checks', 'n_notes', 'created_by', 'updated_by', 'updated_at']));
+  setTimeout(() => download('evidence-' + stamp + '.csv', toCsv(r.evidence, ['obs_id', 'teacher', 'date', 'section', 'role', 'kind', 'text', 'codes', 'extra_tags', 'time'])), 400);
+  toast('Two files downloaded: observations and evidence');
+}
+
+/* ---------- VISITS ---------- */
+async function viewVisits() {
+  const f = S.vf || (S.vf = { type: '', teacher: '', from: '', to: '', del: false });
+  view('<div class="card muted">Loading...</div>');
+  const r = await api('obs_list', { type: f.type || undefined, teacher: f.teacher || undefined, from: f.from || undefined, to: f.to || undefined, deleted: f.del ? 'only' : undefined });
+  const rows = r.observations;
+  view(`<h2>Visits</h2>
+  <div class="card"><div class="grid2">
+    <div><label class="f">Type</label><select id="vt"><option value="">All</option><option value="informal" ${f.type === 'informal' ? 'selected' : ''}>Informal</option><option value="formal" ${f.type === 'formal' ? 'selected' : ''}>Formal</option></select></div>
+    <div><label class="f">Teacher</label><select id="vteach">${teacherOptions(f.teacher).replace('Choose a teacher...', 'Everyone')}</select></div>
+    <div><label class="f">From</label><input type="date" id="vf" value="${esc(f.from)}"></div>
+    <div><label class="f">To</label><input type="date" id="vto" value="${esc(f.to)}"></div></div>
+    <div class="row" style="margin-top:10px"><label class="row small" style="gap:6px"><input type="checkbox" id="vdel" ${f.del ? 'checked' : ''} style="width:22px;height:22px"> Show deleted (restorable)</label>
+    <span style="flex:1"></span><button class="btn small alt" id="vcsv">Download CSV</button></div></div>
+  <div class="card"><div class="muted small">${rows.length} ${f.del ? 'deleted ' : ''}visit${rows.length === 1 ? '' : 's'}</div><div class="list">
+  ${rows.map(o => `<div class="item"><div class="grow click" data-go="/obs/${encodeURIComponent(o.id)}"><div class="t">${esc(o.teacher)}</div>
+      <div class="small muted">${esc(fmtDs(o.date))} ${esc(fmtT(o.time_in))}${o.time_out ? '-' + esc(fmtT(o.time_out)) : ''}${o.minutes != null ? ' (' + o.minutes + ' min)' : ''} ${o.period ? '- ' + esc(o.period) : ''} ${o.room ? '- ' + esc(o.room) : ''}</div>
+      <div style="display:flex;gap:5px;flex-wrap:wrap;margin-top:3px"><span class="pill info">${esc(o.type)}</span>${o.status === 'draft' ? '<span class="pill warn">draft</span>' : ''}${o.is_gpv ? '<span class="pill ok">Growth Plan Visit</span>' : ''}<span class="pill">${o.n_checks} checks, ${o.n_notes} notes</span></div></div>
+      ${f.del ? `<button class="btn small" data-restore="${esc(o.id)}">Restore</button>` : `<a class="btn small alt" href="#/print/${encodeURIComponent(o.id)}">Print</a><button class="btn small alt" data-del="${esc(o.id)}" aria-label="Delete">Delete</button>`}</div>`).join('') || '<p class="muted">Nothing here.</p>'}
+  </div></div>`);
+  const rerun = () => { f.type = $('#vt').value; f.teacher = $('#vteach').value; f.from = $('#vf').value; f.to = $('#vto').value; f.del = $('#vdel').checked; viewVisits(); };
+  ['vt', 'vteach', 'vf', 'vto', 'vdel'].forEach(id => $('#' + id).onchange = rerun);
+  $('#vcsv').onclick = () => exportCsv(f.from, f.to).catch(e => toast(e.message, true));
+  $$('[data-del]').forEach(b => b.onclick = async () => { if (await confirmBox('Delete this observation? It is hidden, not erased, and you can restore it.', 'Delete', true)) { try { await api('obs_delete', undefined, { id: b.dataset.del }); lsDel('spobs_draft_' + b.dataset.del); toast('Deleted (restorable)'); viewVisits(); } catch (e) { toast(e.message, true); } } });
+  $$('[data-restore]').forEach(b => b.onclick = async () => { try { await api('obs_restore', undefined, { id: b.dataset.restore }); toast('Restored'); viewVisits(); } catch (e) { toast(e.message, true); } });
+}
+
+/* ---------- TEACHERS ---------- */
+async function viewTeachers() {
+  view('<div class="card muted">Loading...</div>');
+  const [o, d] = await Promise.all([api('obs_list', {}), api('dashboard', { today: todayStr() })]);
+  const last = {}, cnt = {};
+  o.observations.filter(x => x.status === 'final').forEach(x => { const k = x.teacher.toLowerCase(); cnt[k] = (cnt[k] || 0) + 1; if (!last[k] || x.date > last[k]) last[k] = x.date; });
+  const edst = {}; d.edst.forEach(e => edst[e.name.toLowerCase()] = e);
+  const draw = (filter, showHidden) => {
+    const list = teachers(showHidden).filter(t => !filter || t.name.toLowerCase().indexOf(filter.toLowerCase()) >= 0);
+    $('#tlist').innerHTML = list.map(t => { const k = t.name.toLowerCase(); return `<div class="item click" data-go="/teacher/${encodeURIComponent(t.name)}"><div class="grow"><div class="t">${esc(t.name)} ${edst[k] ? '<span class="pill info">EDST</span>' : ''} ${t.status === 'hidden' ? '<span class="pill">hidden</span>' : ''}</div><div class="small muted">${cnt[k] ? cnt[k] + ' visit' + (cnt[k] > 1 ? 's' : '') + ', last ' + fmtD(last[k]) : 'No visits yet'}${t.default_room ? ' - ' + esc(t.default_room) : ''}</div></div><span class="muted">›</span></div>`; }).join('') || '<p class="muted">No match.</p>';
+  };
+  view(`<div class="row"><h2 style="flex:1">Teachers</h2><button class="btn small" id="addT">+ Add teacher</button></div>
+  <div class="card"><input type="search" id="tq" placeholder="Search names"><label class="row small" style="gap:6px;margin-top:8px"><input type="checkbox" id="th" style="width:22px;height:22px"> Show hidden</label>
+  <p class="small muted" style="margin:8px 0 0">The names come from your points spreadsheet (read only). Add anyone else by hand.</p></div>
+  <div class="card"><div class="list" id="tlist"></div></div>`);
+  draw('', false);
+  $('#tq').oninput = () => draw($('#tq').value, $('#th').checked); $('#th').onchange = () => draw($('#tq').value, $('#th').checked);
+  $('#addT').onclick = () => addTeacherModal(n => go('/teacher/' + encodeURIComponent(n)));
+}
+
+async function viewTeacher(name) {
+  view('<div class="card muted">Loading...</div>');
+  const r = await api('teacher_page', { name, today: todayStr() });
+  const t = r.teacher, ed = r.edst;
+  const maxV = Math.max(1, ...r.seen.map(x => x.visits));
+  view(`<div class="row"><a href="#/teachers" class="btn small alt">‹ Teachers</a><h2 style="flex:1;margin:0">${esc(t.name)}</h2></div>
+  <div class="grid2" style="margin-top:8px"><a class="btn big gold" style="text-decoration:none;display:flex;align-items:center;justify-content:center" href="#/new?type=informal&teacher=${encodeURIComponent(t.name)}">Informal walkthrough</a>
+  <a class="btn big" style="text-decoration:none;display:flex;align-items:center;justify-content:center" href="#/new?type=formal&teacher=${encodeURIComponent(t.name)}">Formal observation</a></div>
+  <div class="card"><h3>EDST ${esc(r.eval_year)}</h3>
+    <label class="chk ${r.on_edst ? 'on' : ''}" id="edtog" style="margin-top:8px"><span class="box">${r.on_edst ? '✓' : ''}</span><span class="tx"><b>On EDST this year</b></span></label>
+    ${r.on_edst ? `<div style="display:flex;gap:6px;flex-wrap:wrap;margin:8px 0">${statusPill(ed)}<span class="pill ${ed.gpv_done ? (ed.gpv_short ? 'warn' : 'ok') : ''}">${ed.gpv_done ? 'Growth Plan Visit ' + fmtD(ed.gpv_date) : 'Growth Plan Visit: not yet'}</span>${ed.formal_date ? `<span class="pill info">Formal ${fmtD(ed.formal_date)}</span>` : ''}</div>` : ''}
+  </div>
+  <div class="card"><h3>Details</h3><div class="grid2" style="margin-top:6px"><div><label class="f">Default room</label><input type="text" id="tr" value="${esc(t.default_room)}"></div><div><label class="f">Grades</label><input type="text" id="tg" value="${esc(t.grades)}"></div>
+    <div style="grid-column:1/-1"><label class="f">Email (used only when you choose to send feedback)</label><input type="email" id="te" value="${esc(t.email)}"></div></div>
+    <div class="row" style="margin-top:10px"><button class="btn small" id="tsave">Save details</button><button class="btn small alt" id="thide">${t.status === 'hidden' ? 'Show in lists again' : 'Hide from lists'}</button><span class="muted small">${t.source === 'points' ? 'From points spreadsheet' : 'Added by hand'}</span></div></div>
+  <div class="card"><h3>Open follow-ups</h3><div class="list">${r.followups.filter(f => f.status === 'open').map(f => followupRow(f)).join('') || '<p class="muted">None.</p>'}</div></div>
+  <div class="card"><h3>TLF elements seen (${r.seen.length})</h3>${r.seen.length ? `<table class="rep">${r.seen.slice(0, 40).map(x => `<tr><td style="width:46px"><span class="code">${esc(x.code)}</span></td><td>${esc(x.element)}${x.focus ? ' <span style="color:var(--gold)" title="EDST focus element">★</span>' : ''}</td><td style="width:90px"><div class="barc"><i style="width:${Math.round(100 * x.visits / maxV)}%"></i></div></td><td style="width:40px;text-align:right">${x.visits}</td></tr>`).join('')}</table><p class="small muted">Number = visits where this element was tagged. ★ = EDST focus element.</p>` : '<p class="muted">No tagged evidence yet.</p>'}</div>
+  <div class="card"><h3>Timeline</h3><div class="list">${r.visits.map(o => `<div class="item click" data-go="/obs/${encodeURIComponent(o.id)}"><div class="grow"><div class="t">${esc(fmtDs(o.date))} <span class="pill info">${esc(o.type)}</span> ${o.status === 'draft' ? '<span class="pill warn">draft</span>' : ''}${o.is_gpv ? ' <span class="pill ok">GPV</span>' : ''}</div><div class="small muted">${esc(fmtT(o.time_in))}${o.time_out ? '-' + esc(fmtT(o.time_out)) : ''} ${o.period ? esc(o.period) : ''} ${esc(o.subject)}</div></div><span class="muted">›</span></div>`).join('') || '<p class="muted">No visits yet.</p>'}</div></div>`);
+  $('#edtog').onclick = async () => { try { await api('edst_set', { teacher: t.name, on_edst: !r.on_edst }); viewTeacher(name); } catch (e) { toast(e.message, true); } };
+  $('#tsave').onclick = async () => { try { const x = await api('teacher_save', { name: t.name, default_room: $('#tr').value, grades: $('#tg').value, email: $('#te').value }); S.init.teachers = x.teachers; toast('Saved'); } catch (e) { toast(e.message, true); } };
+  $('#thide').onclick = async () => { try { const x = await api('teacher_save', { name: t.name, status: t.status === 'hidden' ? 'active' : 'hidden' }); S.init.teachers = x.teachers; viewTeacher(name); } catch (e) { toast(e.message, true); } };
+}
+
+/* ---------- REPORTS by TLF element ---------- */
+async function viewReports(q) {
+  const f = S.rf || (S.rf = { teacher: '', from: S.init.settings.eval_start, to: todayStr(), type: '', focus: false });
+  view('<div class="card muted">Loading...</div>');
+  const r = await api('report', { teacher: f.teacher || undefined, from: f.from || undefined, to: f.to || undefined, type: f.type || undefined, focus_only: f.focus });
+  const seen = r.rows.filter(x => x.visits > 0), maxV = Math.max(1, ...r.rows.map(x => x.visits));
+  const unseen = r.rows.filter(x => x.visits === 0 && x.focus);
+  const row = x => `<tr><td style="width:46px"><span class="code">${esc(x.code)}</span></td><td>${esc(x.element)}${x.focus ? ' <span style="color:var(--gold)" title="EDST focus element">★</span>' : ''}<div class="small muted">${esc(x.component)}</div></td><td style="width:80px"><div class="barc"><i style="width:${Math.round(100 * x.visits / maxV)}%"></i></div></td><td style="width:34px;text-align:right"><b>${x.visits}</b></td><td style="width:44px;text-align:right" class="small muted" title="check marks and tags">${x.items}</td></tr>`;
+  view(`<h2>Reports by TLF element</h2>
+  <div class="card"><div class="grid2">
+    <div><label class="f">Who</label><select id="rt">${teacherOptions(f.teacher).replace('Choose a teacher...', 'Whole school')}</select></div>
+    <div><label class="f">Type</label><select id="rty"><option value="">All visits</option><option value="informal" ${f.type === 'informal' ? 'selected' : ''}>Informal</option><option value="formal" ${f.type === 'formal' ? 'selected' : ''}>Formal</option></select></div>
+    <div><label class="f">From</label><input type="date" id="rf" value="${esc(f.from)}"></div><div><label class="f">To</label><input type="date" id="rto" value="${esc(f.to)}"></div></div>
+    <label class="row small" style="gap:6px;margin-top:8px"><input type="checkbox" id="rfo" ${f.focus ? 'checked' : ''} style="width:22px;height:22px"> Only EDST focus elements (★)</label></div>
+  <div class="grid3"><div class="card stat"><b>${r.n_obs}</b>finished visits</div><div class="card stat"><b>${r.n_teachers}</b>teachers</div><div class="card stat"><b>${seen.length}</b>elements seen</div></div>
+  ${r.n_obs ? `<div class="card"><h3>Seen most</h3><table class="rep">${seen.slice(0, 5).map(row).join('') || '<tr><td class="muted">Nothing tagged yet.</td></tr>'}</table></div>
+  <div class="card"><h3>EDST focus elements not seen in this range</h3>${unseen.length ? `<div style="display:flex;gap:6px;flex-wrap:wrap;margin-top:6px">${unseen.map(x => `<span class="pill warn" title="${esc(x.element)}">${esc(x.code)} ${esc(x.element)}</span>`).join('')}</div>` : '<p class="muted">All focus elements have been seen.</p>'}</div>
+  <div class="card"><div class="row"><h3 style="flex:1">All elements, most to least</h3><button class="btn small alt" id="rcsv">Download CSV</button></div><table class="rep"><tr><th>Code</th><th>Element</th><th>Visits</th><th></th><th>Items</th></tr>${r.rows.map(row).join('')}</table>
+    <p class="small muted">Visits = how many finished visits had evidence tagged with the element. Items = check marks plus tags you added. Drafts and deleted visits are not counted.</p></div>` : '<div class="card"><p class="muted">No finished visits in this range.</p></div>'}`);
+  const rerun = () => { f.teacher = $('#rt').value; f.type = $('#rty').value; f.from = $('#rf').value; f.to = $('#rto').value; f.focus = $('#rfo').checked; viewReports(q); };
+  ['rt', 'rty', 'rf', 'rto', 'rfo'].forEach(id => $('#' + id).onchange = rerun);
+  if ($('#rcsv')) $('#rcsv').onclick = () => download('tlf-report-' + todayStr() + '.csv', toCsv(r.rows, ['code', 'element', 'component', 'standard', 'focus', 'visits', 'items', 'teacher_items', 'student_items', 'last']));
+}
+
+/* ---------- SETTINGS ---------- */
+async function viewSettings() {
+  const s = S.init.settings;
+  view(`<h2>Settings</h2>
+  <div class="card"><h3>Dates and thresholds</h3>
+    <div class="grid2" style="margin-top:6px">
+      <div><label class="f">Formal observation deadline</label><input type="date" id="s_formal_deadline" value="${esc(s.formal_deadline)}"></div>
+      <div><label class="f">Share ratings by</label><input type="date" id="s_ratings_deadline" value="${esc(s.ratings_deadline)}"></div>
+      <div><label class="f">Growth Plan Visit due</label><input type="date" id="s_gpv_due" value="${esc(s.gpv_due)}"></div>
+      <div><label class="f">Not-visited alert (days)</label><input type="text" inputmode="numeric" id="s_unvisited_days" value="${esc(s.unvisited_days)}"></div>
+      <div><label class="f">Evaluation year</label><input type="text" id="s_eval_year" value="${esc(s.eval_year)}"></div>
+      <div><label class="f">Year starts</label><input type="date" id="s_eval_start" value="${esc(s.eval_start)}"></div>
+      <div><label class="f">Year ends</label><input type="date" id="s_eval_end" value="${esc(s.eval_end)}"></div>
+      <div><label class="f">School name (printouts)</label><input type="text" id="s_school_name" value="${esc(s.school_name)}"></div></div>
+    <p class="small muted">Defaults come from the 2026-27 EDST timeline (June 2026): formal observation 2/19/27, ratings shared 3/9/27, Growth Plan Visit recommended 3/19/27. Confirm each year.</p>
+    <button class="btn" id="ssave">Save dates</button></div>
+  <div class="card"><h3>Change my private code</h3><div class="grid2"><div><label class="f">Current code</label><input type="password" id="oc" autocomplete="off"></div><div><label class="f">New code (8+ characters)</label><input type="password" id="nc" autocomplete="off"></div></div><button class="btn" style="margin-top:10px" id="csave">Change code</button></div>
+  <div class="card"><h3>Form wording and TLF</h3><p class="small muted" style="margin:6px 0 0">To change wording or add items, edit the <b>form</b> tab in your spreadsheet (section, type, text, codes). The <b>framework</b> tab holds the TLF. Then reload this page.</p></div>
+  <div class="card"><div class="row"><h3 style="flex:1">Change log</h3><button class="btn small alt" id="alog">Show last 200</button></div><div id="logbox"></div></div>
+  <div class="card"><div class="row"><button class="btn alt" id="reload">Reload form and teacher list</button><button class="btn bad" id="out">Sign out</button></div><p class="small muted">${esc(BUILD)}</p></div>`);
+  $('#ssave').onclick = async () => { const p = {}; ['formal_deadline', 'ratings_deadline', 'gpv_due', 'unvisited_days', 'eval_year', 'eval_start', 'eval_end', 'school_name'].forEach(k => p[k] = $('#s_' + k).value.trim()); try { await api('settings_set', p); Object.assign(S.init.settings, p); toast('Saved'); } catch (e) { toast(e.message, true); } };
+  $('#csave').onclick = async () => { try { await api('change_code', { old_code: $('#oc').value, new_code: $('#nc').value }); $('#oc').value = $('#nc').value = ''; toast('Code changed'); } catch (e) { toast(e.message, true); } };
+  $('#alog').onclick = async () => { try { const r = await api('audit'); $('#logbox').innerHTML = `<table class="rep small">${r.rows.map(x => `<tr><td class="small muted">${esc(x.when.replace('T', ' '))}</td><td>${esc(x.who)}</td><td><b>${esc(x.action)}</b> ${esc(x.summary)}</td></tr>`).join('')}</table><p class="small muted">Old values are kept in the auditlog tab of the spreadsheet.</p>`; } catch (e) { toast(e.message, true); } };
+  $('#reload').onclick = async () => { S.init = await api('init'); toast('Reloaded'); route(); };
+  $('#out').onclick = async () => { try { await api('logout', undefined, undefined, true); } catch (e) { } S.token = null; saveSession(); showLogin('Signed out.'); };
+}
+
+/* ============ THE OBSERVATION FORM ============ */
+let O = null;                      // observation being edited
+let clockT = null, autoT = null, localT = null, saving = false;
+const FW = () => { if (!S._fw) { S._fw = {}; (S.init.framework || []).forEach(f => S._fw[f.code] = f); } return S._fw; };
+function fwName(c) { const f = FW()[c]; return f ? f.element : ''; }
+function normCode(c) { return String(c || '').trim().toLowerCase().replace(/^([1-5][a-e])\.?([1-9])$/, '$1.$2'); }
+function splitCodes(s) { return String(s || '').split(/[,&;\s]+/).map(normCode).filter(Boolean); }
+function periodFor(t) {
+  const m = hhmmToMin(t); if (m == null) return '';
+  const b = (S.init.bell || []).find(x => { const a = hhmmToMin(x.start), z = hhmmToMin(x.end); return a != null && z != null && m >= a && m < z; });
+  return b ? b.name : '';
+}
+function sections() {
+  const map = {};
+  (S.init.form || []).forEach(r => {
+    const s = map[r.section] || (map[r.section] = { n: r.section, title: '', informal: 'Y', q: [], teacher: [], student: [] });
+    if (r.type === 'section') { s.title = r.text; s.informal = r.informal === 'N' ? 'N' : 'Y'; }
+    else if (r.type === 'question') s.q.push(r); else if (r.type === 'teacher') s.teacher.push(r); else if (r.type === 'student') s.student.push(r);
+  });
+  return Object.keys(map).map(Number).sort((a, b) => a - b).map(k => map[k]);
+}
+function blankData() { return { answers: {}, checks: {}, notes: {}, feedback: '', pre_notes: '', post_notes: '', followups: [] }; }
+function addWeekdays(s, n) { const d = new Date(s + 'T12:00:00'); let left = n; while (left > 0) { d.setDate(d.getDate() + 1); const w = d.getDay(); if (w !== 0 && w !== 6) left--; } return ymd(d); }
+
+async function newObs(type, teacher, gpv) {
+  const now = new Date(), t = (S.init.teachers || []).find(x => x.name === teacher) || {};
+  O = { id: rid('o_'), type, teacher, date: ymd(now), time_in: hm(now), time_out: '', period: periodFor(hm(now)), room: t.default_room || '', grades: t.grades || '', subject: '',
+    is_gpv: !!gpv, status: 'draft', pre_date: '', post_date: '', ratings_shared: '', consent_transcript: false, data: blankData(), transcript: '', base_updated: '', _trSaved: '', _dirty: true, _started: now.getTime(), _new: true };
+  saveLocal(); go('/obs/' + encodeURIComponent(O.id));
+  if (!t.default_room) {          // fill the room from the last visit, if there was one
+    api('obs_list', { teacher }, undefined, true).then(r => { const last = (r.observations || []).find(o => o.room); if (last && O && O.teacher === teacher && !O.room) { O.room = last.room; const el = $('[data-f=room]'); if (el) el.value = O.room; touch(); } }).catch(() => { });
+  }
+}
+function saveLocal() {
+  if (!O) return;
+  const copy = Object.assign({}, O); lsSet('spobs_draft_' + O.id, JSON.stringify({ O: copy, saved: Date.now() }));
+}
+function touch() {
+  if (!O) return; O._dirty = true; clearTimeout(localT); localT = setTimeout(() => { saveLocal(); setSt('Draft kept on this device'); }, 350);
+}
+function setSt(t) { const e = $('#svst'); if (e) e.textContent = t; }
+function stopClock() { clearInterval(clockT); clockT = null; }
+function stopAutosave() { clearInterval(autoT); autoT = null; }
+function startClock() {
+  stopClock();
+  const tick = () => {
+    const e = $('#clk'); if (!e || !O) return;
+    if (O.time_out || O.status === 'final') { e.textContent = 'In ' + fmtT(O.time_in) + (O.time_out ? ' - Out ' + fmtT(O.time_out) : ''); return; }
+    let start = O._started; if (!start) { const m = hhmmToMin(O.time_in); const d = new Date(O.date + 'T00:00:00'); start = d.getTime() + (m || 0) * 60000; }
+    const s = Math.max(0, Math.floor((Date.now() - start) / 1000));
+    e.textContent = 'In ' + fmtT(O.time_in) + '  ·  ' + pad2(Math.floor(s / 3600)) + ':' + pad2(Math.floor(s / 60) % 60) + ':' + pad2(s % 60);
+  };
+  tick(); clockT = setInterval(tick, 1000);
+}
+document.addEventListener('visibilitychange', () => { if (document.hidden && O) { clearTimeout(localT); saveLocal(); } });
+window.addEventListener('pagehide', () => { if (O) saveLocal(); });
+
+async function viewObs(id) {
+  if (!O || O.id !== id) {
+    stopSTT(); O = null;
+    const loc = lsGet('spobs_draft_' + id);
+    if (loc) { try { O = JSON.parse(loc).O; } catch (e) { O = null; } }
+    if (!O) {
+      view('<div class="card muted">Loading...</div>');
+      const r = await api('obs_get', undefined, { id });
+      const d = Object.assign(blankData(), r.data || {});
+      O = Object.assign({}, r.obs, { is_gpv: !!r.obs.is_gpv, consent_transcript: !!r.obs.consent_transcript, data: d, transcript: r.transcript || '', base_updated: r.obs.updated_at, _trSaved: r.transcript || '', _dirty: false });
+    } else if (!O.data) O.data = blankData();
+  }
+  renderForm();
+}
+
+/* ---- rendering ---- */
+function headerCard() {
+  const periods = (S.init.bell || []).map(b => `<option value="${esc(b.name)}">`).join('');
+  return `<div class="card"><div class="row" style="margin-bottom:6px"><span class="pill info">${O.type === 'formal' ? 'Formal observation' : 'Informal walkthrough'}</span>${O.status === 'final' ? '<span class="pill ok">finished</span>' : '<span class="pill warn">draft</span>'}</div>
+  <div class="grid2">
+    <div style="grid-column:1/-1"><label class="f">Teacher</label><div class="row" style="flex-wrap:nowrap"><select data-f="teacher" style="flex:1">${teacherOptions(O.teacher)}${O.teacher && !(S.init.teachers || []).some(t => t.name === O.teacher) ? `<option selected>${esc(O.teacher)}</option>` : ''}</select><button class="btn alt" data-addteacher>+ Add</button></div></div>
+    <div><label class="f">Observation date</label><input type="date" data-f="date" value="${esc(O.date)}"></div>
+    <div><label class="f">Time In</label><input type="time" data-f="time_in" value="${esc(O.time_in)}"></div>
+    <div><label class="f">Time Out</label><input type="time" data-f="time_out" value="${esc(O.time_out)}"></div>
+    <div><label class="f">Period</label><input type="text" data-f="period" list="plist" value="${esc(O.period)}"><datalist id="plist">${periods}</datalist></div>
+    <div><label class="f">Room</label><input type="text" data-f="room" value="${esc(O.room)}"></div>
+    <div><label class="f">Grade(s)</label><input type="text" data-f="grades" value="${esc(O.grades)}"></div>
+    <div style="grid-column:1/-1"><label class="f">Subject/Lesson</label><input type="text" data-f="subject" value="${esc(O.subject)}"></div>
+    ${O.type === 'informal' ? `<div style="grid-column:1/-1"><div class="chk ${O.is_gpv ? 'on' : ''}" data-gpv style="margin:0"><span class="box">${O.is_gpv ? '✓' : ''}</span><span class="tx"><b>Growth Plan Visit</b> <span class="small muted">(EDST, at least 10 minutes)</span></span></div></div>` : ''}
+  </div></div>`;
+}
+function codeChips(codes) { return splitCodes(codes).map(c => `<span class="code" title="${esc(fwName(c))}">${esc(c)}</span>`).join(''); }
+function checkHtml(it, sec, role) {
+  const c = O.data.checks[it.id];
+  return `<div class="chk ${c ? 'on' : ''}" role="checkbox" aria-checked="${c ? 'true' : 'false'}" tabindex="0" data-check="${esc(it.id)}" data-sec="${sec}" data-role="${role}"><span class="box">${c ? '✓' : ''}</span><span class="tx">${esc(it.text)} ${codeChips(it.codes)}<span class="when">${c ? esc(fmtT(c.t.slice(11, 16))) : ''}</span></span></div>`;
+}
+function orphanChecks(sec, role, known) {
+  return Object.keys(O.data.checks).filter(id => { const c = O.data.checks[id]; return String(c.section) === String(sec) && c.role === role && known.indexOf(id) < 0; })
+    .map(id => { const c = O.data.checks[id]; return checkHtml({ id, text: c.text + ' (no longer on the form)', codes: c.codes }, sec, role); }).join('');
+}
+function noteKey(sec, role) { return 's' + sec + '_' + role; }
+function noteBlock(key, label) {
+  const n = O.data.notes[key] || {};
+  return `<div class="notelbl">${esc(label || 'Notes/Evidence')}</div><textarea data-note="${esc(key)}" rows="3" placeholder="Notes/Evidence">${esc(n.text || '')}</textarea>
+  <div class="tags" id="tags_${esc(key)}">${tagsHtml(key)}</div><button class="btn small alt" data-tagadd="${esc(key)}">+ Add TLF tag</button>`;
+}
+function groupCodes(key) {          // codes carried by checked items in this note's group (sections 2-6)
+  const m = /^s(\d+)_(teacher|student)$/.exec(key); if (!m) return [];
+  const out = [];
+  Object.keys(O.data.checks).forEach(id => { const c = O.data.checks[id]; if (String(c.section) === m[1] && c.role === m[2]) splitCodes(c.codes).forEach(x => { if (out.indexOf(x) < 0) out.push(x); }); });
+  return out;
+}
+function tagsHtml(key) {
+  const n = O.data.notes[key] || {}, ex = (n.tags || []);
+  const auto = groupCodes(key).filter(c => ex.indexOf(c) < 0);
+  return ex.map(c => `<span class="tag" title="${esc(fwName(c))}">${esc(c)} <button data-tagrm="${esc(key)}|${esc(c)}" aria-label="Remove tag ${esc(c)}">×</button></span>`).join('') +
+    auto.map(c => `<span class="code" title="Added automatically from checked items: ${esc(fwName(c))}">${esc(c)}</span>`).join('');
+}
+function sectionBadgeCount(s) {
+  let n = 0; const sec = String(s.n);
+  Object.values(O.data.checks).forEach(c => { if (String(c.section) === sec) n++; });
+  Object.values(O.data.answers).forEach(a => { if (String(a.section) === sec && a.choice) n++; });
+  Object.keys(O.data.notes).forEach(k => { const x = O.data.notes[k]; if (String(x.section) === sec && (x.text || '').trim()) n++; });
+  if (s.n === 7) { if ((O.data.feedback || '').trim()) n++; n += (O.data.followups || []).filter(f => f.text.trim()).length; }
+  return n;
+}
+function sectionHtml(s) {
+  let body = '';
+  if (s.n === 7) {
+    const q = s.q[0];
+    body = `<div class="sub">${esc(q ? q.text : 'What are some possible strategies or next steps to deepen learning?')}</div><textarea data-feedback rows="4" placeholder="Notes">${esc(O.data.feedback || '')}</textarea>
+    <div class="sub">Follow-up items (optional)</div><div id="fulist">${fuListHtml()}</div><button class="btn small alt" data-fuadd>+ Add follow-up</button>`;
+  } else {
+    s.q.forEach(q => {
+      const a = O.data.answers[q.id] || {}, key = 'q_' + q.id, opts = (q.options || '').split('|').filter(Boolean);
+      body += `<div class="sub">${esc(q.text)}</div>`;
+      if (opts.length) body += `<div class="opts" data-q="${esc(q.id)}">${opts.map(o => `<button data-opt="${esc(o)}" class="${a.choice === o ? 'on' : ''}">${esc(o)}</button>`).join('')}</div>`;
+      body += noteBlock(key, 'Notes/Evidence');
+    });
+    ['teacher', 'student'].forEach(role => {
+      const items = s[role]; if (!items.length && !Object.values(O.data.checks).some(c => String(c.section) === String(s.n) && c.role === role)) return;
+      body += `<div class="sub">Evidence of ${role === 'teacher' ? 'Teacher' : 'Student'} Move Examples (Check off)</div>` + items.map(it => checkHtml(it, s.n, role)).join('') + orphanChecks(s.n, role, items.map(i => i.id)) + noteBlock(noteKey(s.n, role));
+    });
+  }
+  return `<details class="sec" data-sec="${s.n}" ${(s.n === 1 || s.n === 7) ? 'open' : ''}><summary><span class="num">${s.n}</span><span>${esc(s.title)}</span><span class="pill info" data-badge="${s.n}" style="margin-left:auto;margin-right:8px">${sectionBadgeCount(s)}</span></summary><div class="body">${body}</div></details>`;
+}
+function fuListHtml() {
+  return (O.data.followups || []).map((f, i) => `<div class="row" style="flex-wrap:nowrap;margin:6px 0"><input type="text" data-fu="${i}" data-k="text" value="${esc(f.text)}" placeholder="What will happen next?" style="flex:2"><input type="date" data-fu="${i}" data-k="due" value="${esc(f.due || '')}" style="flex:1;min-width:130px"><button class="btn small alt" data-furm="${i}" aria-label="Remove follow-up">✕</button></div>`).join('');
+}
+function preCard() {
+  return `<div class="card"><h3>Pre-observation conference</h3><p class="small muted" style="margin:4px 0">Held 1-3 days before the observation.</p>
+  <label class="f">Conference date</label><input type="date" data-f="pre_date" value="${esc(O.pre_date)}">
+  <label class="f" style="margin-top:8px">Notes</label><textarea data-g="pre_notes" rows="4">${esc(O.data.pre_notes || '')}</textarea></div>`;
+}
+function postCard() {
+  const due = O.date ? addWeekdays(O.date, 10) : '';
+  return `<div class="card"><h3>Post-observation conference</h3><p class="small muted" style="margin:4px 0">Due within 10 workdays of the observation${due ? ' (weekdays only, holidays not counted): <b>' + fmtD(due) + '</b>' : ''}. Share ratings 1-2 business days after the conference.</p>
+  <div class="grid2"><div><label class="f">Conference date</label><input type="date" data-f="post_date" value="${esc(O.post_date)}"></div><div><label class="f">Ratings shared with teacher</label><input type="date" data-f="ratings_shared" value="${esc(O.ratings_shared)}"></div></div>
+  <label class="f" style="margin-top:8px">Notes</label><textarea data-g="post_notes" rows="4">${esc(O.data.post_notes || '')}</textarea></div>`;
+}
+function transcriptCard() {
+  const sr = !!(window.SpeechRecognition || window.webkitSpeechRecognition);
+  return `<div class="card" id="trcard"><h3>Transcription</h3>
+  <p class="small muted" style="margin:4px 0 8px">Optional. Pick whichever works in the room. Audio is never recorded or stored by this app - only the text you keep.</p>
+  <div class="chk ${O.consent_transcript ? 'on' : ''}" data-consent style="margin-top:0"><span class="box">${O.consent_transcript ? '✓' : ''}</span><span class="tx"><b>The teacher agreed to transcription of this lesson.</b><br><span class="small muted">California Education Code 51512 limits recording devices in classrooms without the teacher's and principal's consent. Check with HR or UTLA if unsure.</span></span></div>
+  <div class="seg" id="trseg" style="margin:10px 0"><button data-m="live" class="on">Live speech-to-text</button><button data-m="type">Type or dictate</button><button data-m="paste">Paste or load file</button></div>
+  <div data-pane="live">
+    ${sr ? `<div class="row"><button class="btn" id="sttbtn">Start listening</button><div style="flex:1;min-width:150px"><select id="spk" aria-label="Who is speaking"><option value="T">Label lines: Teacher</option><option value="S">Label lines: Student</option><option value="">No label</option></select></div></div><div id="interim" class="small muted" style="min-height:22px;margin-top:6px"></div>
+    <p class="small muted">Your browser turns speech into text using its own speech service (Chrome uses Google's, Safari uses Apple's), so the sound leaves this device for that. If that is not acceptable for your classroom, use "Type or dictate" or "Paste or load file". Set the speaker label as people take turns; the browser cannot tell voices apart. Works best with the phone close to the speaker.</p>`
+      : `<p class="small" style="color:var(--bad)">This browser cannot do live speech-to-text. Use Chrome on Android or desktop, or Safari on iPhone. Or use the other two options.</p>`}
+  </div>
+  <div data-pane="type" class="hide"><p class="small muted">Tap the text box and use your keyboard's microphone key to dictate, or just type. "Stamp time" adds the clock time so lines line up with your check marks.</p></div>
+  <div data-pane="paste" class="hide"><p class="small muted">Load a transcript from another tool (Google Recorder, Otter, Teams, Zoom). Accepts .txt, .vtt and .srt files, or paste into the box below.</p><input type="file" id="trfile" accept=".txt,.vtt,.srt,text/plain" style="margin-bottom:6px"></div>
+  <textarea id="tscript" class="tscript" placeholder="Transcript appears here. You can edit it." spellcheck="false">${esc(O.transcript || '')}</textarea>
+  <div class="row" style="margin-top:8px"><button class="btn small alt" id="trstamp">Stamp time</button><button class="btn small alt" id="trdl">Download .txt</button><button class="btn small alt" id="trclr">Clear</button><span class="small muted" id="trcount"></span></div></div>`;
+}
+function renderForm() {
+  const secs = sections(), formal = O.type === 'formal';
+  const sh = secs.filter(s => formal || s.informal !== 'N');
+  let h = `<div id="formroot">` + headerCard() + (formal ? preCard() : '') + sh.map(sectionHtml).join('') + (formal ? transcriptCard() + postCard() : '') +
+    `<div class="card noprint"><div class="row"><button class="btn alt" id="aPrint">Print form</button><button class="btn alt" id="aEmail">Email feedback...</button>${O.status === 'final' || !O._new ? '<button class="btn alt bad" id="aDel" style="color:#fff">Delete</button>' : '<button class="btn alt" id="aDisc">Discard draft</button>'}</div></div></div>`;
+  view(h);
+  bindForm(); startClock(); startAutosave();
+  const done = O.status === 'final';
+  bar(`<div class="st"><b id="clk"></b><span id="svst" class="muted">${done ? 'Finished' : 'Draft kept on this device'}</span></div>` + (done ? '<button class="btn" id="bSave">Save changes</button>' : '<button class="btn alt" id="bSave">Save draft</button><button class="btn gold" id="bFin">Finish</button>'));
+  $('#bSave').onclick = () => saveObs({}); if ($('#bFin')) $('#bFin').onclick = () => saveObs({ finish: true });
+  startClock();
+}
+function refreshBadges() { sections().forEach(s => { const b = $('[data-badge="' + s.n + '"]'); if (b) b.textContent = sectionBadgeCount(s); }); }
+function refreshTags(key) { const e = $('#tags_' + key); if (e) e.innerHTML = tagsHtml(key); }
+function refreshAllGroupTags() { $$('[id^=tags_s]').forEach(e => refreshTags(e.id.slice(5))); }
+
+/* ---- note metadata ---- */
+function metaFor(key) {
+  let m = /^s(\d+)_(teacher|student)$/.exec(key); if (m) return { section: +m[1], role: m[2], label: '' };
+  m = /^q_(.+)$/.exec(key); if (m) { const q = (S.init.form || []).find(r => r.id === m[1]); return { section: q ? q.section : 1, role: 'task', label: q ? q.text : '' }; }
+  return { section: 0, role: 'x', label: '' };
+}
+function noteObj(key) { return O.data.notes[key] || (O.data.notes[key] = Object.assign({ text: '', tags: [], t: '' }, metaFor(key))); }
+
+/* ---- events ---- */
+function bindForm() {
+  const root = $('#formroot');
+  root.addEventListener('click', onFormClick);
+  root.addEventListener('keydown', e => { if ((e.key === 'Enter' || e.key === ' ') && e.target.matches('.chk[tabindex]')) { e.preventDefault(); e.target.click(); } });
+  root.addEventListener('input', onFormInput);
+  root.addEventListener('change', onFormInput);
+  bindTranscript();
+  const bt = (id, fn) => { const e = $(id); if (e) e.onclick = fn; };
+  bt('#aPrint', async () => { if (await saveObs({ quiet: true })) go('/print/' + encodeURIComponent(O.id)); });
+  bt('#aEmail', async () => { if (await saveObs({ quiet: true })) emailModal(O.id); });
+  bt('#aDel', async () => { if (await confirmBox('Delete this observation? It is hidden, not erased, and you can restore it from Visits.', 'Delete', true)) { try { await api('obs_delete', undefined, { id: O.id }); lsDel('spobs_draft_' + O.id); O = null; toast('Deleted (restorable)'); go('/visits'); } catch (e) { toast(e.message, true); } } });
+  bt('#aDisc', async () => { if (await confirmBox('Discard this draft from this device? Anything already saved to the server stays there as a draft.', 'Discard', true)) { lsDel('spobs_draft_' + O.id); O = null; go('/'); } });
+}
+function onFormClick(e) {
+  const t = e.target;
+  let el;
+  if ((el = t.closest('[data-check]'))) {
+    const id = el.dataset.check, sec = +el.dataset.sec, role = el.dataset.role;
+    const it = (S.init.form || []).find(r => r.id === id) || { text: '', codes: '' };
+    if (O.data.checks[id]) delete O.data.checks[id];
+    else O.data.checks[id] = { t: isoLocal(new Date()), text: it.text, codes: splitCodes(it.codes).join(', '), section: sec, role };
+    const c = O.data.checks[id];
+    el.classList.toggle('on', !!c); el.setAttribute('aria-checked', c ? 'true' : 'false');
+    $('.box', el).textContent = c ? '✓' : ''; $('.when', el).textContent = c ? fmtT(c.t.slice(11, 16)) : '';
+    refreshBadges(); refreshTags(noteKey(sec, role)); touch(); return;
+  }
+  if ((el = t.closest('[data-opt]'))) {
+    const q = el.closest('[data-q]').dataset.q, form = (S.init.form || []).find(r => r.id === q) || {};
+    const a = O.data.answers[q];
+    if (a && a.choice === el.dataset.opt) delete O.data.answers[q];
+    else O.data.answers[q] = { choice: el.dataset.opt, label: form.text || '', section: form.section || 1, t: isoLocal(new Date()) };
+    $$('button', el.parentNode).forEach(b => b.classList.toggle('on', !!O.data.answers[q] && b.dataset.opt === O.data.answers[q].choice));
+    refreshBadges(); touch(); return;
+  }
+  if ((el = t.closest('[data-tagadd]'))) { openTagPicker(el.dataset.tagadd); return; }
+  if ((el = t.closest('[data-tagrm]'))) { const [k, c] = el.dataset.tagrm.split('|'); const n = noteObj(k); n.tags = n.tags.filter(x => x !== c); refreshTags(k); touch(); return; }
+  if (t.closest('[data-gpv]')) { O.is_gpv = !O.is_gpv; const g = $('[data-gpv]'); g.classList.toggle('on', O.is_gpv); $('.box', g).textContent = O.is_gpv ? '✓' : ''; touch(); return; }
+  if (t.closest('[data-consent]')) { O.consent_transcript = !O.consent_transcript; const g = $('[data-consent]'); g.classList.toggle('on', O.consent_transcript); $('.box', g).textContent = O.consent_transcript ? '✓' : ''; touch(); return; }
+  if (t.closest('[data-addteacher]')) { addTeacherModal(n => { O.teacher = n; $('[data-f=teacher]').innerHTML = teacherOptions(n); fillFromTeacher(); touch(); }); return; }
+  if (t.closest('[data-fuadd]')) { O.data.followups.push({ id: rid('u_'), text: '', due: '' }); $('#fulist').innerHTML = fuListHtml(); const l = $$('#fulist input[data-k=text]'); l[l.length - 1].focus(); touch(); return; }
+  if ((el = t.closest('[data-furm]'))) { O.data.followups.splice(+el.dataset.furm, 1); $('#fulist').innerHTML = fuListHtml(); refreshBadges(); touch(); return; }
+}
+function fillFromTeacher() {
+  const t = (S.init.teachers || []).find(x => x.name === O.teacher); if (!t) return;
+  if (!O.room && t.default_room) { O.room = t.default_room; $('[data-f=room]').value = O.room; }
+  if (!O.grades && t.grades) { O.grades = t.grades; $('[data-f=grades]').value = O.grades; }
+}
+function onFormInput(e) {
+  const t = e.target;
+  if (t.dataset.f) {
+    const k = t.dataset.f; O[k] = t.value;
+    if (k === 'teacher') fillFromTeacher();
+    if (k === 'time_in') { const p = periodFor(O.time_in); if (p && (!O.period || O._autoPeriod)) { O.period = p; O._autoPeriod = true; $('[data-f=period]').value = p; } }
+    if (k === 'period') O._autoPeriod = false;
+    if (k === 'date' && O.type === 'formal') { const pc = $('#formroot'); }
+    touch(); return;
+  }
+  if (t.dataset.note) { const n = noteObj(t.dataset.note); n.text = t.value; if (!n.t && t.value) n.t = isoLocal(new Date()); refreshBadges(); touch(); return; }
+  if ('feedback' in t.dataset) { O.data.feedback = t.value; refreshBadges(); touch(); return; }
+  if (t.dataset.g) { O.data[t.dataset.g] = t.value; touch(); return; }
+  if (t.dataset.fu !== undefined) { O.data.followups[+t.dataset.fu][t.dataset.k] = t.value; refreshBadges(); touch(); return; }
+}
+
+/* ---- TLF tag picker ---- */
+function openTagPicker(key) {
+  const n = noteObj(key);
+  const fw = S.init.framework || [];
+  const m = modal(`<div class="hd"><h3>Add TLF tags</h3><button class="btn small" data-x>Done</button></div><input type="search" id="tq" placeholder="Search by code or words, e.g. 3b.1 or questions"><div id="plist2" style="margin-top:8px"></div>`, () => { refreshTags(key); touch(); });
+  const draw = () => {
+    const q = $('#tq').value.toLowerCase().trim(); let last = '';
+    $('#plist2').innerHTML = fw.filter(f => !q || (f.code + ' ' + f.element + ' ' + f.component + ' ' + f.standard).toLowerCase().indexOf(q) >= 0).map(f => {
+      const head = f.component !== last ? `<div class="sub" style="margin-top:10px">${esc(f.component)}</div>` : ''; last = f.component;
+      return head + `<div class="pick ${n.tags.indexOf(f.code) >= 0 ? 'on' : ''}" data-code="${esc(f.code)}"><span class="cd">${esc(f.code)}</span><span style="flex:1">${esc(f.element)} ${f.edst_focus === 'Y' ? '<span class="star" title="EDST focus element">★</span>' : ''}${f.description ? `<div class="small muted">${esc(f.description)}</div>` : ''}</span></div>`;
+    }).join('') || '<p class="muted">No match.</p>';
+  };
+  draw(); $('#tq').oninput = draw; $('[data-x]', m).onclick = closeModal;
+  $('#plist2').onclick = e => { const p = e.target.closest('.pick'); if (!p) return; const c = p.dataset.code, i = n.tags.indexOf(c); if (i >= 0) n.tags.splice(i, 1); else n.tags.push(c); p.classList.toggle('on', n.tags.indexOf(c) >= 0); };
+}
+
+/* ---- saving ---- */
+function payload(extra) {
+  const d = O.data;
+  return Object.assign({ id: O.id, type: O.type, teacher: O.teacher, date: O.date, time_in: O.time_in, time_out: O.time_out, period: O.period, room: O.room, grades: O.grades, subject: O.subject,
+    is_gpv: !!O.is_gpv, status: O.status, pre_date: O.pre_date, post_date: O.post_date, ratings_shared: O.ratings_shared, consent_transcript: !!O.consent_transcript, base_updated: O.base_updated || '',
+    data: { answers: d.answers, checks: d.checks, notes: d.notes, feedback: d.feedback, pre_notes: d.pre_notes, post_notes: d.post_notes, followups: (d.followups || []).filter(f => (f.text || '').trim()) } }, extra || {});
+}
+async function saveObs(opt) {
+  opt = opt || {};
+  if (!O || saving) return false;
+  if (!O.teacher) { if (!opt.auto) toast('Choose a teacher first.', true); return false; }
+  if (opt.finish) {
+    if (!O.time_out) { O.time_out = hm(new Date()); const e = $('[data-f=time_out]'); if (e) e.value = O.time_out; }
+    const mins = minutesBetween(O.time_in, O.time_out);
+    if (O.is_gpv && mins != null && mins < 10 && !(await confirmBox('Only ' + mins + ' minute(s) between Time In and Time Out. A Growth Plan Visit is at least 10 minutes. Finish anyway?', 'Finish anyway'))) return false;
+    O.status = 'final';
+  }
+  saving = true; if (!opt.auto) setSt('Saving...');
+  try {
+    const r = await api('obs_save', payload({ auto: !!opt.auto, force: !!O._force }), undefined, true);
+    if (!r.ok) {
+      if (r.conflict) { if (opt.finish) O.status = 'draft'; saving = false; conflictModal(r.error); return false; }
+      throw new Error(r.error);
+    }
+    O._force = false; O.base_updated = r.updated_at; O._dirty = false; O._new = false;
+    if ((O.transcript || '') !== (O._trSaved || '')) { await api('tr_save', { id: O.id, text: O.transcript || '' }); O._trSaved = O.transcript || ''; }
+    if (r.warnings && r.warnings.length && !opt.auto) toast('Saved. Note: ' + r.warnings[0], true);
+    if (O.status === 'final') lsDel('spobs_draft_' + O.id); else saveLocal();
+    setSt(opt.auto ? 'Auto-saved ' + fmtT(hm(new Date())) : 'Saved ' + fmtT(hm(new Date())));
+    saving = false;
+    if (opt.finish) { const id = O.id; O = null; go('/done/' + encodeURIComponent(id)); }
+    else if (!opt.auto && !opt.quiet) toast(O.status === 'final' ? 'Changes saved' : 'Draft saved');
+    return true;
+  } catch (e) {
+    saving = false; if (opt.finish) O.status = 'draft';
+    if (e instanceof AuthError) { saveLocal(); return false; }
+    setSt('Not saved to server - kept on this device'); saveLocal();
+    if (!opt.auto) toast(e.message, true);
+    return false;
+  }
+}
+function conflictModal(msg) {
+  const m = modal(`<h3>Changed somewhere else</h3><p>${esc(msg)}</p><p class="small muted">Overwrite replaces the saved copy with what is on this screen (the old one stays in the change log). Reload shows the saved copy and drops your edits here.</p><div class="row"><button class="btn bad" data-o>Overwrite</button><button class="btn alt" data-r>Reload saved copy</button></div>`);
+  $('[data-o]', m).onclick = () => { O._force = true; closeModal(); saveObs({}); };
+  $('[data-r]', m).onclick = () => { lsDel('spobs_draft_' + O.id); O = null; closeModal(); route(); };
+}
+function startAutosave() {
+  stopAutosave();
+  autoT = setInterval(() => { if (O && O._dirty && O.teacher && !saving && navigator.onLine !== false) saveObs({ auto: true }); }, 45000);
+}
+
+/* ---- transcription ---- */
+const STT = { rec: null, on: false };
+function stopSTT() { STT.on = false; try { STT.rec && STT.rec.stop(); } catch (e) { } STT.rec = null; const b = $('#sttbtn'); if (b) b.textContent = 'Start listening'; }
+function appendTranscript(text) {
+  if (!text) return; const sp = $('#spk') ? $('#spk').value : '';
+  O.transcript = (O.transcript || '') + (O.transcript && !/\n$/.test(O.transcript) ? '\n' : '') + '[' + hms(new Date()) + '] ' + (sp ? sp + ': ' : '') + text + '\n';
+  const ta = $('#tscript'); if (ta) { ta.value = O.transcript; ta.scrollTop = ta.scrollHeight; } countTr(); touch();
+}
+function countTr() { const c = $('#trcount'); if (c) c.textContent = (O.transcript || '').split(/\s+/).filter(Boolean).length + ' words'; }
+function bindTranscript() {
+  const card = $('#trcard'); if (!card) return;
+  countTr();
+  $$('#trseg button').forEach(b => b.onclick = () => { $$('#trseg button').forEach(x => x.classList.toggle('on', x === b)); $$('[data-pane]', card).forEach(p => p.classList.toggle('hide', p.dataset.pane !== b.dataset.m)); });
+  $('#tscript').oninput = e => { O.transcript = e.target.value; countTr(); touch(); };
+  $('#trstamp').onclick = () => { const ta = $('#tscript'); O.transcript = (O.transcript || '') + (O.transcript && !/\n$/.test(O.transcript) ? '\n' : '') + '[' + hms(new Date()) + '] '; ta.value = O.transcript; ta.focus(); ta.setSelectionRange(ta.value.length, ta.value.length); touch(); };
+  $('#trdl').onclick = () => download('transcript-' + (O.teacher || 'obs').replace(/[^a-z0-9]+/gi, '-') + '-' + O.date + '.txt', O.transcript || '', 'text/plain;charset=utf-8');
+  $('#trclr').onclick = async () => { if (O.transcript && await confirmBox('Clear the whole transcript on this screen?', 'Clear', true)) { O.transcript = ''; $('#tscript').value = ''; countTr(); touch(); } };
+  $('#trfile').onchange = async e => {
+    const f = e.target.files[0]; if (!f) return; let txt = await f.text();
+    if (/\.(vtt|srt)$/i.test(f.name)) txt = txt.replace(/^WEBVTT.*$/m, '').replace(/^\d+\s*$/gm, '').replace(/(\d\d:\d\d:\d\d)[.,]\d+ --> .*$/gm, '[$1]').replace(/(\[\d\d:\d\d:\d\d\])\n/g, '$1 ').replace(/\n{3,}/g, '\n\n').trim() + '\n';
+    O.transcript = (O.transcript ? O.transcript + '\n' : '') + txt; $('#tscript').value = O.transcript; countTr(); touch(); toast('Loaded ' + f.name);
+  };
+  const btn = $('#sttbtn'); if (!btn) return;
+  btn.onclick = () => {
+    if (STT.on) { stopSTT(); return; }
+    if (!O.consent_transcript) return toast('Check the consent box first.', true);
+    const SR = window.SpeechRecognition || window.webkitSpeechRecognition; const rec = new SR();
+    rec.lang = 'en-US'; rec.continuous = true; rec.interimResults = true; STT.rec = rec; STT.on = true; btn.textContent = 'Stop listening';
+    rec.onresult = ev => { let interim = ''; for (let i = ev.resultIndex; i < ev.results.length; i++) { const r = ev.results[i]; if (r.isFinal) appendTranscript(r[0].transcript.trim()); else interim += r[0].transcript; } const it = $('#interim'); if (it) it.innerHTML = interim ? '<span class="live"></span>' + esc(interim) : '<span class="live"></span>Listening...'; };
+    rec.onerror = ev => { if (ev.error === 'not-allowed' || ev.error === 'service-not-allowed') { toast('Microphone permission was blocked.', true); stopSTT(); } else if (ev.error !== 'no-speech' && ev.error !== 'aborted') toast('Speech error: ' + ev.error, true); };
+    rec.onend = () => { if (STT.on) { try { rec.start(); } catch (e) { setTimeout(() => { try { STT.on && rec.start(); } catch (x) { } }, 400); } } else { const it = $('#interim'); if (it) it.textContent = ''; } };
+    try { rec.start(); const it = $('#interim'); if (it) it.innerHTML = '<span class="live"></span>Listening...'; } catch (e) { toast(e.message, true); stopSTT(); }
+  };
+}
+
+/* ---- finished page ---- */
+function viewDone(id) {
+  clearBar(); O = null;
+  view(`<div class="card good" style="text-align:center"><h2 style="margin-top:0">Saved ✓</h2><p class="muted">The observation is saved to your private spreadsheet.</p>
+  <div class="grid2"><a class="btn big" style="text-decoration:none;display:flex;align-items:center;justify-content:center" href="#/print/${encodeURIComponent(id)}">Print CDI form</a><button class="btn big alt" id="dEmail">Email feedback...</button>
+  <a class="btn big alt" style="text-decoration:none;display:flex;align-items:center;justify-content:center" href="#/obs/${encodeURIComponent(id)}">Edit</a><a class="btn big alt" style="text-decoration:none;display:flex;align-items:center;justify-content:center" href="#/">Home</a></div></div>`);
+  $('#dEmail').onclick = () => emailModal(id);
+}
+
+/* ============ PRINT (looks like the CDI Classroom Observation form) ============ */
+async function viewPrint(id) {
+  clearBar(); view('<div class="card muted">Loading...</div>');
+  const r = await api('obs_get', undefined, { id });
+  const opt = S.pf || (S.pf = { transcript: false, prepost: true });
+  const draw = () => {
+    view(`<div class="noprint"><div class="row"><a class="btn small alt" href="#/visits">‹ Visits</a><h2 style="flex:1;margin:0">Print</h2><button class="btn" id="pgo">Print / Save as PDF</button></div>
+      <div class="card"><div class="row"><label class="row small" style="gap:6px"><input type="checkbox" id="po1" ${opt.prepost ? 'checked' : ''} style="width:22px;height:22px"> Include pre/post conference notes</label>
+      ${r.transcript ? `<label class="row small" style="gap:6px"><input type="checkbox" id="po2" ${opt.transcript ? 'checked' : ''} style="width:22px;height:22px"> Add transcript on extra page(s)</label>` : ''}
+      <button class="btn small alt" id="pemail">Email feedback...</button></div>
+      <p class="small muted" style="margin:6px 0 0">The form fits on one page. If your notes are very long it flows onto a second page. In the print window choose "Save as PDF" to keep a copy.</p></div></div>
+      <div class="printwrap">${sheetHtml(r, opt)}</div>`);
+    $('#pgo').onclick = () => window.print(); $('#pemail').onclick = () => emailModal(id);
+    $('#po1').onchange = e => { opt.prepost = e.target.checked; draw(); }; if ($('#po2')) $('#po2').onchange = e => { opt.transcript = e.target.checked; draw(); };
+    fitSheet(); const pw = $('.printwrap'); if (pw) document.documentElement.style.setProperty('--pz', Math.min(1, (pw.clientWidth - 4) / (7.7 * 96)).toFixed(3));
+  };
+  draw();
+}
+function fitSheet() {
+  const sh = $('.sheet'); if (!sh) return;
+  requestAnimationFrame(() => {
+    const first = $('.sheet .pagefit'); if (!first) return;
+    first.style.zoom = 1; const H = first.scrollHeight, MAX = 10.25 * 96;
+    if (H > MAX) first.style.zoom = Math.max(0.58, MAX / H);
+  });
+}
+function sheetHtml(r, opt) {
+  const o = r.obs, d = r.data || {}, checks = d.checks || {}, notes = d.notes || {}, answers = d.answers || {};
+  const secs = sections(), E = esc;
+  const noteTxt = key => { const n = notes[key]; if (!n) return ''; const tags = (n.tags || []).length ? `<div class="tg">TLF: ${E(n.tags.join(', '))}</div>` : ''; return (n.text ? `<div class="nt">${E(n.text)}</div>` : '') + tags; };
+  const item = (it, role, sec) => { const c = checks[it.id]; return `<div class="it ${c ? 'on' : ''}"><span class="cb">${c ? '☑' : '☐'}</span><span>${E(it.text)} <span class="cd">(${E(splitCodes(it.codes).join(' & '))})</span>${c ? ` <span class="cd">${E(fmtT(c.t.slice(11, 16)))}</span>` : ''}</span></div>`; };
+  const orphan = (sec, role, known) => Object.keys(checks).filter(id => String(checks[id].section) === String(sec) && checks[id].role === role && known.indexOf(id) < 0).map(id => item({ id, text: checks[id].text, codes: checks[id].codes }, role, sec)).join('');
+  let h = `<div class="sheet"><div class="pagefit">
+  <h1>Classroom Observation</h1><div class="sub2">${E((S.init.settings || {}).school_name || '')} &middot; ${o.type === 'formal' ? 'Formal observation' : 'Informal walkthrough'}${o.is_gpv ? ' (Growth Plan Visit)' : ''}${o.period ? ' &middot; ' + E(o.period) : ''}${o.room ? ' &middot; ' + E(o.room) : ''}</div>
+  <table><tr><th style="width:12%">Teacher:</th><td style="width:38%">${E(o.teacher)}</td><th style="width:12%">Time In:</th><td style="width:13%">${E(fmtT(o.time_in))}</td><th style="width:12%">Time Out:</th><td>${E(fmtT(o.time_out))}</td></tr>
+  <tr><th>Observation Date:</th><td>${E(fmtD(o.date))}</td><th>Grade(s):</th><td>${E(o.grades)}</td><th>Subject/Lesson:</th><td>${E(o.subject)}</td></tr></table>`;
+  secs.forEach(s => {
+    if (s.n === 1) {
+      h += `<table><tr><th class="l">Question</th><th class="r">Notes/Evidence</th></tr>` + s.q.map(q => { const a = answers[q.id], key = 'q_' + q.id; return `<tr><td>${E(q.text)}${(q.options || '').split('|').filter(Boolean).length ? '<div>' + q.options.split('|').map(x => `${a && a.choice === x ? '☑' : '☐'} ${E(x)}`).join(' &nbsp; ') + '</div>' : ''}</td><td>${noteTxt(key)}</td></tr>`; }).join('') + `</table>`;
+    } else if (s.n === 7) {
+      h += `<table><tr><th>Actionable Feedback</th></tr><tr><td><b>${E((s.q[0] || {}).text || 'What are some possible strategies or next steps to deepen learning?')}</b><div class="nt">${E(d.feedback || '')}</div>${(d.followups || []).length ? '<div class="mv">Follow-ups</div>' + d.followups.map(f => `<div class="it"><span class="cb">${f.status === 'done' ? '☑' : '☐'}</span><span>${E(f.text)}${f.due ? ' (due ' + E(fmtD(f.due)) + ')' : ''}</span></div>`).join('') : ''}</td></tr></table>`;
+    } else {
+      h += `<table><tr><th class="l">${E(s.title)}</th><th class="r">Notes/Evidence</th></tr>` +
+        ['teacher', 'student'].map(role => `<tr><td><div class="mv">Evidence of ${role === 'teacher' ? 'Teacher' : 'Student'} Move Examples (Check off)</div>${s[role].map(it => item(it, role, s.n)).join('')}${orphan(s.n, role, s[role].map(i => i.id))}</td><td>${noteTxt(noteKey(s.n, role))}</td></tr>`).join('') + `</table>`;
+    }
+  });
+  if (o.type === 'formal' && opt.prepost && (d.pre_notes || d.post_notes || o.pre_date || o.post_date)) {
+    h += `<table><tr><th class="l">Pre-observation conference ${o.pre_date ? '(' + E(fmtD(o.pre_date)) + ')' : ''}</th><th class="r">Post-observation conference ${o.post_date ? '(' + E(fmtD(o.post_date)) + ')' : ''}${o.ratings_shared ? ' - ratings shared ' + E(fmtD(o.ratings_shared)) : ''}</th></tr><tr><td class="nt">${E(d.pre_notes || '')}</td><td class="nt">${E(d.post_notes || '')}</td></tr></table>`;
+  }
+  h += `<div class="foot">Observer: ${E(o.updated_by || o.created_by)} &middot; Confidential personnel record &middot; Printed ${E(fmtD(todayStr()))}</div></div>`;
+  if (opt.transcript && r.transcript) h += `<div class="pb"></div><div class="pagefit2"><h1>Transcript - ${E(o.teacher)}, ${E(fmtD(o.date))}</h1><div class="nt" style="font:8pt/1.3 ui-monospace,Menlo,monospace;white-space:pre-wrap">${E(r.transcript)}</div></div>`;
+  return h + '</div>';
+}
+
+/* ============ EMAIL FEEDBACK (nothing sends until you press Send) ============ */
+async function emailModal(id) {
+  let r; try { r = await api('obs_get', undefined, { id }); } catch (e) { return toast(e.message, true); }
+  const o = r.obs, d = r.data, t = (S.init.teachers || []).find(x => x.name === o.teacher) || {};
+  const secs = sections().filter(s => s.n !== 1 || true);
+  const sel = { 7: true, fu: true };
+  const bullets = (sec, role) => Object.keys(d.checks || {}).map(k => d.checks[k]).filter(c => String(c.section) === String(sec) && c.role === role).map(c => '  - ' + c.text);
+  const build = () => {
+    const L = [];
+    L.push('Hello ' + o.teacher + ',', '', 'Thank you for welcoming me into your classroom on ' + fmtD(o.date) + (o.period ? ' (' + o.period + ')' : '') + (o.subject ? ' during ' + o.subject : '') + '. Here are my notes from the visit.', '');
+    secs.forEach(s => {
+      if (!sel[s.n]) return;
+      if (s.n === 7) { L.push('NEXT STEPS TO DEEPEN LEARNING'); if ((d.feedback || '').trim()) L.push(d.feedback.trim()); else L.push('(none recorded)'); L.push(''); return; }
+      const part = [];
+      s.q.forEach(q => { const a = (d.answers || {})[q.id], n = (d.notes || {})['q_' + q.id]; if ((a && a.choice) || (n && n.text)) part.push(q.text + (a && a.choice ? ' - ' + a.choice : '') + (n && n.text ? '\n  ' + n.text.trim() : '')); });
+      ['teacher', 'student'].forEach(role => {
+        const b = bullets(s.n, role), n = (d.notes || {})[noteKey(s.n, role)];
+        if (b.length) part.push((role === 'teacher' ? 'Teacher moves I saw:' : 'Student moves I saw:') + '\n' + b.join('\n'));
+        if (n && n.text && n.text.trim()) part.push((role === 'teacher' ? 'Notes on teacher moves: ' : 'Notes on student moves: ') + n.text.trim());
+      });
+      L.push(s.title.toUpperCase()); L.push(part.length ? part.join('\n') : '(nothing recorded)'); L.push('');
+    });
+    if (sel.fu && (d.followups || []).length) { L.push('FOLLOW-UP ITEMS'); d.followups.forEach(f => L.push('  - ' + f.text + (f.due ? ' (by ' + fmtD(f.due) + ')' : ''))); L.push(''); }
+    if (sel.tags) { const codes = new Set(); Object.values(d.checks || {}).forEach(c => splitCodes(c.codes).forEach(x => codes.add(x))); Object.values(d.notes || {}).forEach(n => (n.tags || []).forEach(x => codes.add(x))); if (codes.size) { L.push('TLF ELEMENTS I TAGGED'); Array.from(codes).sort().forEach(c => L.push('  - ' + c + ' ' + fwName(c))); L.push(''); } }
+    L.push('Please reach out if you would like to talk any of this through.', '', S.who, (S.init.settings || {}).school_name || '');
+    return L.join('\n');
+  };
+  const m = modal(`<div class="hd"><h3>Email feedback</h3><button class="btn small alt" data-x>Close</button></div>
+    <p class="small muted" style="margin:0 0 8px">Choose what to include, read the preview, edit it if you like, then press Send. It sends from the Google account that owns your script. Nothing is sent automatically.</p>
+    <div id="esecs">${secs.map(s => `<div class="chk ${sel[s.n] ? 'on' : ''}" data-s="${s.n}" style="min-height:44px;margin:4px 0"><span class="box">${sel[s.n] ? '✓' : ''}</span><span class="tx">${s.n}. ${esc(s.title)}</span></div>`).join('')}
+      <div class="chk on" data-s="fu" style="min-height:44px;margin:4px 0"><span class="box">✓</span><span class="tx">Follow-up items</span></div><div class="chk" data-s="tags" style="min-height:44px;margin:4px 0"><span class="box"></span><span class="tx">TLF elements tagged (code and name)</span></div></div>
+    <label class="f" style="margin-top:8px">To</label><input type="email" id="eto" value="${esc(t.email || '')}" placeholder="teacher email">
+    <label class="f" style="margin-top:8px">Subject</label><input type="text" id="esub" value="Classroom visit notes - ${esc(fmtD(o.date))}">
+    <label class="f" style="margin-top:8px">Preview (you can edit)</label><textarea id="ebody" rows="14"></textarea>
+    <div class="row" style="margin-top:10px"><button class="btn gold" id="esend">Send email</button><button class="btn alt" data-x2>Cancel</button></div>`);
+  const draw = () => { $('#ebody').value = build(); };
+  draw();
+  $('#esecs').onclick = e => { const c = e.target.closest('[data-s]'); if (!c) return; const k = c.dataset.s; sel[k] = !sel[k]; c.classList.toggle('on', !!sel[k]); $('.box', c).textContent = sel[k] ? '✓' : ''; draw(); };
+  $('[data-x]', m).onclick = closeModal; $('[data-x2]', m).onclick = closeModal;
+  $('#esend').onclick = async () => {
+    const to = $('#eto').value.trim(); if (!to) return toast('Type the teacher\'s email address.', true);
+    if (!(await confirmBox('Send this email to ' + to + ' now?', 'Send'))) return;
+    try {
+      await api('send_feedback', { obs_id: id, to, subject: $('#esub').value, body: $('#ebody').value, sections: Object.keys(sel).filter(k => sel[k]).join(',') });
+      if (to !== t.email && t.name) { api('teacher_save', { name: o.teacher, email: to }).then(x => S.init.teachers = x.teachers).catch(() => { }); }
+      closeModal(); toast('Sent to ' + to);
+    } catch (e) { toast(e.message, true); }
+  };
+}
+
+/* ============ START ============ */
+loadSession();
+if (S.token) boot(); else showLogin();
+
+</script>
+</body>
+</html>
